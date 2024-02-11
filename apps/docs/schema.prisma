@@ -1,0 +1,159 @@
+model User {
+  id        String    @id @unique @default(uuid())
+  createdAt DateTime  @default(now())
+  email     String    @unique
+  password  String
+  role      Role // Each user has a role
+  student   Student? // One-to-one relation with Student model
+  admin     Admin? // One-to-one relation with Admin model
+  educator  Educator? // One-to-one relation with Educator model
+  // studentId  String?
+  // adminId    String?
+  // educatorId String?
+}
+
+model Student {
+  id         String       @id @unique @default(uuid())
+  name       String
+  dob        DateTime
+  eligible   Boolean
+  level      Level
+  school     String
+  User       User         @relation(fields: [userId], references: [id])
+  userId     String       @unique
+  Submission Submission[]
+  Enrollment Enrollment[]
+}
+
+model Admin {
+  id      String @id @unique @default(uuid())
+  name    String
+  address String
+  phone   String
+  User    User   @relation(fields: [userId], references: [id])
+  userId  String @unique
+}
+
+model Educator {
+  id          String       @id @unique @default(uuid())
+  name        String
+  about       String
+  credentials Credential[]
+  verified    Boolean
+  User        User         @relation(fields: [userId], references: [id])
+  userId      String       @unique
+  Course      Course[]
+}
+
+// Define other models like Credential as needed
+
+model Course {
+  id          String       @id @unique @default(uuid())
+  title       String
+  description String
+  summary     String
+  coverPhoto  String?
+  level       Level
+  sections    Section[]
+  resources   Resource[]
+  published   Boolean      @default(false)
+  projects    Project[]
+  enrollments Enrollment[]
+  Educator    Educator?    @relation(fields: [educatorId], references: [id])
+  educatorId  String?
+}
+
+model Resource {
+  id          String  @id @unique @default(uuid())
+  title       String
+  description String?
+  url         String
+  Course      Course  @relation(fields: [courseId], references: [id])
+  courseId    String
+}
+
+model Progress {
+  id           String     @id @unique @default(uuid())
+  percentage   Int
+  Enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
+  enrollmentId String     @unique
+}
+
+model Section {
+  id       String   @id @unique @default(uuid())
+  title    String
+  modules  Module[]
+  Course   Course   @relation(fields: [courseId], references: [id])
+  courseId String
+}
+
+model Module {
+  id        String  @id @unique @default(uuid())
+  title     String
+  content   String?
+  notes     Note[]
+  Section   Section @relation(fields: [sectionId], references: [id])
+  sectionId String
+}
+
+model Note {
+  id          String  @id @unique @default(uuid())
+  title       String?
+  description String
+  Module      Module  @relation(fields: [moduleId], references: [id])
+  moduleId    String
+}
+
+model Submission {
+  id        String    @id @unique @default(cuid())
+  link      String
+  createdAt DateTime? @default(now())
+  Student   Student?  @relation(fields: [studentId], references: [id])
+  studentId String?
+  Project   Project?  @relation(fields: [projectId], references: [id])
+  projectId String?
+}
+
+model Credential {
+  id          String    @id @unique @default(cuid())
+  title       String
+  description String?
+  url         String
+  file        String?
+  Educator    Educator? @relation(fields: [educatorId], references: [id])
+  educatorId  String?
+}
+
+model Enrollment {
+  id        String    @id @unique @default(uuid())
+  createdAt DateTime  @default(now())
+  progress  Progress?
+  Student   Student?  @relation(fields: [studentId], references: [id])
+  studentId String?
+  Course    Course    @relation(fields: [courseId], references: [id])
+  courseId  String
+}
+
+model Project {
+  id          String       @id @unique @default(uuid())
+  title       String
+  description String
+  url         String?
+  submissions Submission[]
+  Course      Course       @relation(fields: [courseId], references: [id])
+  courseId    String
+}
+
+enum Role {
+  ADMIN
+  EDUCATOR
+  STUDENT
+}
+
+enum Level {
+  BEGINNER
+  INTERMIDIATE
+  PRO
+}
+
+// we can add as much as models we need like ratings , reviews, Questions, Answers, Quizzes, etc
