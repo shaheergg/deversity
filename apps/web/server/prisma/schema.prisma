@@ -25,16 +25,16 @@ model User {
 }
 
 model Student {
-  id         String       @id @unique @default(uuid())
-  name       String
-  dob        DateTime
-  eligible   Boolean
-  level      Level
-  school     String
-  User       User         @relation(fields: [userId], references: [id])
-  userId     String       @unique
-  Submission Submission[]
-  Enrollment Enrollment[]
+  id          String       @id @unique @default(uuid())
+  name        String
+  dob         DateTime
+  eligible    Boolean
+  level       Level
+  school      String
+  User        User         @relation(fields: [userId], references: [id])
+  userId      String       @unique
+  submissions Submission[]
+  enrollments Enrollment[]
 }
 
 model Admin {
@@ -76,17 +76,16 @@ model Course {
 }
 
 model Resource {
-  id          String  @id @unique @default(uuid())
+  id          String       @id @unique @default(uuid())
   title       String
   description String?
   url         String
-  Course      Course  @relation(fields: [courseId], references: [id])
-  module      Module? @relation(fields: [moduleId], references: [id])
+  Course      Course?      @relation(fields: [courseId], references: [id])
+  module      Module?      @relation(fields: [moduleId], references: [id])
   moduleId    String?
-  section    Section? @relation(fields: [sectionId], references: [id])
-  sectionId  String?
-  type ResourceType
-  courseId    String
+  sectionId   String?
+  type        ResourceType
+  courseId    String?
 }
 
 model Progress {
@@ -101,16 +100,15 @@ model Section {
   title    String
   modules  Module[]
   Course   Course   @relation(fields: [courseId], references: [id])
-  resources Resource[]
   courseId String
 }
 
 model Module {
-  id        String  @id @unique @default(uuid())
+  id        String     @id @unique @default(uuid())
   title     String
   content   String?
   notes     Note[]
-  Section   Section @relation(fields: [sectionId], references: [id])
+  Section   Section    @relation(fields: [sectionId], references: [id])
   resources Resource[]
   sectionId String
 }
