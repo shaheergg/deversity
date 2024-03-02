@@ -11,10 +11,6 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-router.get("/", (req, res) => {
-  res.status(200).json({ message: "welcome to deversity API" });
-});
-
 app.use("/api", protect, router);
 
 app.post("/register", createUser);
