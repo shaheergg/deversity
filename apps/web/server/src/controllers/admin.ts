@@ -50,7 +50,7 @@ export const getAdmin = async (req, res) => {
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }
-    res.json({ admin });
+    res.json({ data: admin });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
