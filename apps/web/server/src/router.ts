@@ -13,9 +13,10 @@ import { createStudent, getStudent, getStudents } from "./controllers/student";
 const router = Router();
 
 // ----------------- Admin routes -----------------
-router.get("/admin", getAdmin);
+router.get("/admin", adminAccess, getAdmin);
 router.post(
   "/admin",
+  adminAccess,
   body("name").isString(),
   body("address").isString(),
   body("phone").isString(),
@@ -33,7 +34,7 @@ router.post(
   errorHandler,
   createEducator
 );
-router.get("/eductors/:id", adminAccess, getEductor);
+// router.get("/eductors/:id", adminAccess, getEductor);
 
 // ----------------- Student routes -----------------
 
@@ -47,6 +48,6 @@ router.post(
   createStudent
 );
 
-router.get("/students/:id", adminAccess, getStudent);
+// router.get("/students/:id", adminAccess, getStudent);
 
 export default router;

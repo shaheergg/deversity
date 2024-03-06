@@ -10,9 +10,6 @@ import db from "../db";
 export const createAdmin = async (req, res) => {
   const { name, address, phone } = req.body;
   const userId = req.user.id;
-  if (req.user.role !== "ADMIN") {
-    return res.status(403).json({ message: "Forbidden" });
-  }
   try {
     const admin = await db.admin.create({
       data: {
@@ -38,9 +35,6 @@ export const createAdmin = async (req, res) => {
 
 export const getAdmin = async (req, res) => {
   const userId = req.user.id;
-  if (req.user.role !== "ADMIN") {
-    return res.status(403).json({ message: "Forbidden" });
-  }
   try {
     const admin = await db.admin.findUnique({
       where: {
