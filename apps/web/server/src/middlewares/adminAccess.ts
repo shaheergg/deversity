@@ -1,3 +1,4 @@
+import { ROLES } from "../constants";
 /**
  *
  * @param req
@@ -9,7 +10,7 @@
 
 export const adminAccess = (req, res, next) => {
   const userRole = req.user.role.toLowerCase();
-  if (userRole !== "admin") {
+  if (userRole !== ROLES[0].toLowerCase()) {
     return res
       .status(403)
       .send("You are not authorized to access this resource");

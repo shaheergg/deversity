@@ -17,6 +17,7 @@ export const protect = (req, res, next) => {
     return res.status(401).json({ message: "Unauthorized" });
   }
   const [, token] = barear.split(" ");
+  // authorization: "Bearer shhhhldkjfjfkffkkfkfk"
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }

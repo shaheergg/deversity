@@ -137,6 +137,7 @@ model Credential {
   description String?
   url         String
   file        String?
+  type        CredentialType
   Educator    Educator? @relation(fields: [educatorId], references: [id])
   educatorId  String?
 }
@@ -177,6 +178,14 @@ enum ResourceType {
   Video
   File
   Link
+}
+
+enum CredentialType {
+  Certificate
+  Diploma
+  Degree
+  License
+  Other
 }
 
 // we can add as much as models we need like ratings , reviews, Questions, Answers, Quizzes, etc
