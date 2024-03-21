@@ -14,6 +14,29 @@ export const getCourses = async (req, res) => {
   }
 };
 
+export const getCourseDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = await db.course.findUnique({
+      where: { id },
+      include: {
+        Educator: true,
+        projects: true,
+        sections: {
+          include: {
+            modules: true,
+          },
+        },
+      },
+    });
+
+    res.status(200).send({ data: course });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching course details");
+  }
+};
+
 export const createCourse = async (req, res) => {
   const { educatorId } = req.params;
   const { title, description, summary, level, coverPhoto } = req.body;
