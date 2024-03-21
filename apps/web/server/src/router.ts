@@ -7,6 +7,19 @@ import {
   getEducators,
   getEductor,
 } from "./controllers/educator";
+import { 
+  getAllResources,
+  addResource,
+  updateResource,
+  deleteResource 
+} from './controllers/resource';
+
+import { 
+  getAllNotes,
+  addNote,
+  updateNote,
+  deleteNote } from './controllers/note';
+
 import { adminAccess } from "./middlewares/adminAccess";
 import { createStudent, getStudent, getStudents } from "./controllers/student";
 import {
@@ -41,6 +54,7 @@ router.post(
   createEducator
 );
 // router.get("/eductors/:id", adminAccess, getEductor);
+
 
 // ----------------- Student routes -----------------
 
@@ -82,5 +96,61 @@ router.put(
   editCredential
 );
 router.delete("/credentials/:id", deleteCredential);
+
+
+// // ---------------------Resource Routes-------------------------
+
+// router.get("/resources/getAllResources/:courseId/:moduleId",errorHandler,getAllResources);
+// router.post(
+//   "/resources/addResource/:courseId/:moduleId",
+//   body("title").isString(),
+//   body("description").isString(),
+//   body("url").isString(),
+//   body("type").isIn(['Video','File','Link']),
+//   errorHandler,
+//   addResource
+// );
+
+// router.put(
+//   "/resources/updateResource/:resourceId",
+//   body("title").isString(),
+//   body("description").isString(),
+//   body("url").isString(),
+//   body("type").isIn(['Video','File','Link']),
+//   errorHandler,
+//   updateResource
+// );
+// router.delete(
+//   "/resources/deleteResource/:resourceId",
+//   errorHandler,
+//   deleteResource
+// );
+
+// --------------------- Notes Route --------------------
+
+// router.get("/notes/getAllNotes/:moduleId", errorHandler, getAllNotes);
+
+// router.post(
+//   "/notes/addNote/:moduleId",
+//   body("title").isString(),
+//   body("description").isString(),
+//   errorHandler,
+//   addNote
+// );
+
+// router.put(
+//   "/notes/updateNote/:noteId",
+//   body("title").isString(),
+//   body("description").isString(),
+//   errorHandler,
+//   updateNote
+// );
+
+// router.delete(
+//   "/notes/deleteNote/:noteId",
+//   errorHandler,
+//   deleteNote
+// );
+
 
 export default router;
