@@ -100,57 +100,57 @@ router.delete("/credentials/:id", deleteCredential);
 
 // // ---------------------Resource Routes-------------------------
 
-// router.get("/resources/getAllResources/:courseId/:moduleId",errorHandler,getAllResources);
-// router.post(
-//   "/resources/addResource/:courseId/:moduleId",
-//   body("title").isString(),
-//   body("description").isString(),
-//   body("url").isString(),
-//   body("type").isIn(['Video','File','Link']),
-//   errorHandler,
-//   addResource
-// );
+router.get("/resources/getAllResources/:courseId/:moduleId",errorHandler,getAllResources);
+router.post(
+  "/resources/addResource/:courseId/:moduleId",
+  body("title").isString(),
+  body("description").optional().isString(),
+  body("url").isString(),
+  body("type").isIn(['Video','File','Link']),
+  errorHandler,
+  addResource
+);
 
-// router.put(
-//   "/resources/updateResource/:resourceId",
-//   body("title").isString(),
-//   body("description").isString(),
-//   body("url").isString(),
-//   body("type").isIn(['Video','File','Link']),
-//   errorHandler,
-//   updateResource
-// );
-// router.delete(
-//   "/resources/deleteResource/:resourceId",
-//   errorHandler,
-//   deleteResource
-// );
+router.put(
+  "/resources/updateResource/:resourceId",
+  body("title").isString(),
+  body("description").optional().isString(),
+  body("url").isString(),
+  body("type").isIn(['Video','File','Link']),
+  errorHandler,
+  updateResource
+);
+router.delete(
+  "/resources/deleteResource/:resourceId",
+  errorHandler,
+  deleteResource
+);
 
 // --------------------- Notes Route --------------------
 
-// router.get("/notes/getAllNotes/:moduleId", errorHandler, getAllNotes);
+router.get("/notes/getAllNotes/:moduleId", errorHandler, getAllNotes);
 
-// router.post(
-//   "/notes/addNote/:moduleId",
-//   body("title").isString(),
-//   body("description").isString(),
-//   errorHandler,
-//   addNote
-// );
+router.post(
+  "/notes/addNote/:moduleId",
+  body("title").optional().isString(),
+  body("description").isString(),
+  errorHandler,
+  addNote
+);
 
-// router.put(
-//   "/notes/updateNote/:noteId",
-//   body("title").isString(),
-//   body("description").isString(),
-//   errorHandler,
-//   updateNote
-// );
+router.put(
+  "/notes/updateNote/:noteId",
+  body("title").optional().isString(),
+  body("description").isString(),
+  errorHandler,
+  updateNote
+);
 
-// router.delete(
-//   "/notes/deleteNote/:noteId",
-//   errorHandler,
-//   deleteNote
-// );
+router.delete(
+  "/notes/deleteNote/:noteId",
+  errorHandler,
+  deleteNote
+);
 
 
 export default router;

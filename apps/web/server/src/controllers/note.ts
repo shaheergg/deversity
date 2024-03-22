@@ -29,7 +29,7 @@ export const addNote = async (req, res) => {
       },
     });
 
-    res.status(201).json({ data: newNote });
+    res.status(200).send({ data: newNote });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred while adding a note");
@@ -50,7 +50,7 @@ export const updateNote = async (req, res) => {
       },
     });
 
-    res.json({ data: updatedNote });
+    res.status(200).send({ data: updatedNote });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred while updating the note");
@@ -66,7 +66,7 @@ export const deleteNote = async (req, res) => {
       where: { id: noteId },
     });
 
-    res.status(204).end();
+    res.status(200).send("Note deleted successfully");
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred while deleting the note");
