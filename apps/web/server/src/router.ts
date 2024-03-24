@@ -15,6 +15,28 @@ import {
   editCredential,
   getCredentials,
 } from "./controllers/credential";
+import {
+  createCourse,
+  deleteCourse,
+  editCourse,
+  getCourseDetails,
+  getCourses,
+  publishCourse,
+} from "./controllers/course";
+import {
+  createSection,
+  deleteSection,
+  editSection,
+  getSections,
+} from "./controllers/section";
+import {
+  createModule,
+  deleteModule,
+  getModule,
+  getNextModule,
+  getPreviousModule,
+  updateModule,
+} from "./controllers/module";
 
 const router = Router();
 
@@ -83,4 +105,66 @@ router.put(
 );
 router.delete("/credentials/:id", deleteCredential);
 
+// ----------------- Course routes -----------------
+
+router.get("/courses/:educatorId", getCourses);
+router.get("/course/:id", getCourseDetails);
+router.post(
+  "/courses/:educatorId",
+  body("title").isString(),
+  body("description").isString(),
+  body("summary").isString(),
+  body("coverPhoto").isString().optional(),
+  errorHandler,
+  createCourse
+);
+router.put("/courses/:id/publish", publishCourse);
+router.put(
+  "/courses/:id",
+  body("title").isString(),
+  body("description").isString(),
+  body("summary").isString(),
+  body("coverPhoto").isString().optional(),
+  errorHandler,
+  editCourse
+);
+router.delete("/courses/:id", deleteCourse);
+
+// ----------------- Section routes -----------------
+
+router.get("/sections/:courseId", getSections);
+router.post(
+  "/sections/:courseId",
+  body("title").isString(),
+  errorHandler,
+  createSection
+);
+router.put(
+  "/sections/:id",
+  body("title").isString(),
+  errorHandler,
+  editSection
+);
+router.delete("/sections/:id", deleteSection);
+
+// ----------------- Module routes -----------------
+
+router.post(
+  "/modules/:sectionId",
+  body("title").isString(),
+  body("content").isString().optional(),
+  errorHandler,
+  createModule
+);
+router.get("/modules/:moduleId/next", getNextModule);
+router.get("/modules/:moduleId/previous", getPreviousModule);
+router.get("/modules/:moduleId", getModule);
+router.delete("/modules/:moduleId", deleteModule);
+router.put(
+  "/modules/:moduleId",
+  body("title").isString(),
+  body("content").isString().optional(),
+  errorHandler,
+  updateModule
+);
 export default router;
