@@ -121,6 +121,7 @@ model Note {
   moduleId    String
 }
 
+// submission model to store the project submissions
 model Submission {
   id        String    @id @unique @default(cuid())
   link      String

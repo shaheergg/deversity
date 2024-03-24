@@ -83,4 +83,64 @@ router.put(
 );
 router.delete("/credentials/:id", deleteCredential);
 
+// ----------------- Submission routes -----------------
+import {
+  createSubmission,
+  getSubmissions,
+  editSubmission,
+  deleteSubmission,
+} from "./controllers/submission";
+
+router.get("/submissions/:studentId", getSubmissions);
+router.post(
+  "/submissions",
+  body("studentId").isString(),
+  body("link").isString(),
+  createSubmission
+);
+
+router.put(
+  "/submissions/:id",
+  body("id").isString(),
+  body("link").isString(),
+  editSubmission
+);
+
+router.delete("/submissions/:id", deleteSubmission);
+
+
+
+// ----------------- Project routes -----------------
+
+import {
+  createProject,
+  getProjects,
+  editProject,
+  deleteProject,
+} from "./controllers/project";
+
+
+router.get("/projects/:id", getProjects);
+router.post(
+  "/projects",
+  body("title").isString(),
+  body("description").isString().optional(),
+  body("url").isString(),
+  body("courseId").isString(),
+  createProject
+);
+
+router.put(
+  "/projects/:id",
+  body("title").isString(),
+  body("description").isString().optional(),
+  body("url").isString(),
+  body("courseId").isString(),
+  editProject
+);
+
+
+router.delete("/projects/:id", deleteProject);
+
+
 export default router;

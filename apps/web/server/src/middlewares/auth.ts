@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+import process from "process";
 // write appropriate comment
 
 /**

@@ -11,7 +11,11 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", protect, router);
+// app.use("/api", protect, router);
+
+app.use("/api",  router);
+
+
 
 app.post("/register", createUser);
 app.post("/login/:role", signIn);
