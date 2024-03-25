@@ -7,18 +7,19 @@ import {
   getEducators,
   getEductor,
 } from "./controllers/educator";
-import { 
+import {
   getAllResources,
   addResource,
   updateResource,
-  deleteResource 
-} from './controllers/resource';
+  deleteResource,
+} from "./controllers/resource";
 
-import { 
+import {
   getAllNotes,
   addNote,
   updateNote,
-  deleteNote } from './controllers/note';
+  deleteNote,
+} from "./controllers/note";
 
 import { adminAccess } from "./middlewares/adminAccess";
 import { createStudent, getStudent, getStudents } from "./controllers/student";
@@ -50,6 +51,11 @@ import {
   getPreviousModule,
   updateModule,
 } from "./controllers/module";
+import {
+  enrollCourse,
+  getCourseEnrollments,
+  getStudentEnrollments,
+} from "./controllers/enrollment";
 
 const router = Router();
 
@@ -76,7 +82,6 @@ router.post(
   createEducator
 );
 // router.get("/eductors/:id", adminAccess, getEductor);
-
 
 // ----------------- Student routes -----------------
 
@@ -119,16 +124,19 @@ router.put(
 );
 router.delete("/credentials/:id", deleteCredential);
 
-
 // // ---------------------Resource Routes-------------------------
 
-router.get("/resources/getAllResources/:courseId/:moduleId",errorHandler,getAllResources);
+router.get(
+  "/resources/getAllResources/:courseId/:moduleId",
+  errorHandler,
+  getAllResources
+);
 router.post(
   "/resources/addResource/:courseId/:moduleId",
   body("title").isString(),
   body("description").optional().isString(),
   body("url").isString(),
-  body("type").isIn(['Video','File','Link']),
+  body("type").isIn(["Video", "File", "Link"]),
   errorHandler,
   addResource
 );
@@ -138,7 +146,7 @@ router.put(
   body("title").isString(),
   body("description").optional().isString(),
   body("url").isString(),
-  body("type").isIn(['Video','File','Link']),
+  body("type").isIn(["Video", "File", "Link"]),
   errorHandler,
   updateResource
 );
@@ -168,12 +176,7 @@ router.put(
   updateNote
 );
 
-router.delete(
-  "/notes/deleteNote/:noteId",
-  errorHandler,
-  deleteNote
-);
-
+router.delete("/notes/deleteNote/:noteId", errorHandler, deleteNote);
 
 // ----------------- Course routes -----------------
 
@@ -237,4 +240,11 @@ router.put(
   errorHandler,
   updateModule
 );
+
+// ----------------- Enrollment routes -----------------
+
+router.get("/students/:studentId/enrollments", getStudentEnrollments);
+router.get("/courses/:courseId/enrollments", getCourseEnrollments);
+router.post("/students/:studentId/courses/:courseId/enroll", enrollCourse);
+
 export default router;
