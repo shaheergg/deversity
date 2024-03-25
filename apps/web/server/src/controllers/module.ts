@@ -18,6 +18,42 @@ export const createModule = async (req, res) => {
   }
 };
 
+const getStudentProgress = async (enrollmentId) => {
+  const progress = await db.progress.findFirst({
+    where: {
+      enrollmentId,
+    },
+  });
+  return progress;
+};
+
+const incrementStudentProgress = async (enrollmentId) => {
+  const progress = await getStudentProgress(enrollmentId);
+  if (!progress) {
+    // Handle case where no progress is found
+    throw new Error("Progress not found for enrollment");
+  }
+
+  const totalModules = await db.module.count(); // Get total number of modules
+  const updatedPercentage = progress.percentage + 100 / totalModules;
+
+  const updatedProgress = await db.progress.update({
+    where: {
+      id: progress.id,
+    },
+    data: {
+      percentage: updatedPercentage,
+    },
+  });
+  return updatedProgress;
+};
+
+/**
+ *
+ * @param req
+ * @param res
+ * @returns
+ */
 export const getNextModule = async (req, res) => {
   const { moduleId } = req.params;
   try {
@@ -31,7 +67,19 @@ export const getNextModule = async (req, res) => {
         id: "asc",
       },
     });
-    res.status(200).send({ data: module });
+    if (!module) {
+      return res.status(404).send("Module not found");
+    }
+
+    const studentId = req.user.id;
+    const enrollment = await db.enrollment.findFirst({
+      where: {
+        studentId,
+      },
+    });
+    await incrementStudentProgress(enrollment.id);
+    const progress = await getStudentProgress(enrollment.id);
+    res.status(200).send({ data: module, progress: progress });
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching next module");
@@ -51,6 +99,9 @@ export const getPreviousModule = async (req, res) => {
         id: "desc",
       },
     });
+    if (!module) {
+      return res.status(404).send("Module not found");
+    }
     res.status(200).send({ data: module });
   } catch (error) {
     console.error(error);
