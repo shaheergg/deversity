@@ -8,8 +8,10 @@ import {
   getEductor,
 } from "./controllers/educator";
 import {
-  getAllResources,
-  addResource,
+  getResourcesForCourse,
+  getResourcesForModule,
+  addResourceToModule,
+  addResourceToCourse,
   updateResource,
   deleteResource,
 } from "./controllers/resource";
@@ -56,6 +58,22 @@ import {
   getCourseEnrollments,
   getStudentEnrollments,
 } from "./controllers/enrollment";
+
+import { 
+  getAllSubmissionsForProject,
+  getSubmissionById,
+  createSubmission,
+  updateSubmission,
+  deleteSubmission,
+  } from "./controllers/submission";
+
+  import { 
+  getAllProjectsForCourse,
+  getProjectById,
+  createProject,
+  updateProject, 
+  deleteProject 
+} from './controllers/project';
 
 const router = Router();
 
@@ -124,25 +142,41 @@ router.put(
 );
 router.delete("/credentials/:id", deleteCredential);
 
-// // ---------------------Resource Routes-------------------------
+// // --------------------- Resource Routes-------------------------
 
 router.get(
-  "/resources/getAllResources/:courseId/:moduleId",
+  "/course/resources/:courseId",
   errorHandler,
-  getAllResources
+  getResourcesForCourse
+);
+router.get(
+  "/module/resources/:moduleId",
+  errorHandler,
+  getResourcesForModule
 );
 router.post(
-  "/resources/addResource/:courseId/:moduleId",
+  "/course/resources/:courseId",
   body("title").isString(),
   body("description").optional().isString(),
   body("url").isString(),
   body("type").isIn(["Video", "File", "Link"]),
   errorHandler,
-  addResource
+  addResourceToCourse,
 );
 
+router.post(
+  "/module/resources/:moduleId",
+  body("title").isString(),
+  body("description").optional().isString(),
+  body("url").isString(),
+  body("type").isIn(["Video", "File", "Link"]),
+  errorHandler,
+  addResourceToModule,
+);
+
+
 router.put(
-  "/resources/updateResource/:resourceId",
+  "/resources/:resourceId",
   body("title").isString(),
   body("description").optional().isString(),
   body("url").isString(),
@@ -151,17 +185,17 @@ router.put(
   updateResource
 );
 router.delete(
-  "/resources/deleteResource/:resourceId",
+  "/resources/:resourceId",
   errorHandler,
   deleteResource
 );
 
 // --------------------- Notes Route --------------------
 
-router.get("/notes/getAllNotes/:moduleId", errorHandler, getAllNotes);
+router.get("/module/notes/:moduleId", errorHandler, getAllNotes);
 
 router.post(
-  "/notes/addNote/:moduleId",
+  "/module/notes/:moduleId",
   body("title").optional().isString(),
   body("description").isString(),
   errorHandler,
@@ -169,14 +203,75 @@ router.post(
 );
 
 router.put(
-  "/notes/updateNote/:noteId",
+  "/module/notes/:noteId",
   body("title").optional().isString(),
   body("description").isString(),
   errorHandler,
   updateNote
 );
 
-router.delete("/notes/deleteNote/:noteId", errorHandler, deleteNote);
+router.delete(
+  "/module/notes/:noteId",
+  errorHandler, 
+  deleteNote
+);
+
+// ----------------- Project Routes --------------------------
+
+router.get(
+  "/projects/:courseId",
+  errorHandler,
+  getAllProjectsForCourse
+);
+router.get(
+  "/project/:projectId",
+  errorHandler,
+  getProjectById
+);
+router.post(
+  "/project/:courseId",
+  body("title").isString(),
+  body("description").isString(),
+  body("url").optional().isString(),
+  errorHandler,
+  createProject
+);
+router.put(
+  "/project/:projectId",
+  body("title").isString(),
+  body("description").isString(),
+  body("url").optional().isString(),
+  updateProject
+);
+router.delete(
+  "/project/:projectId",
+  errorHandler,
+  deleteProject
+);
+
+// --------------------- Submission Routes --------------------
+
+router.get("/submissions/:projectId", getAllSubmissionsForProject);
+router.get("/submission/:submissionId", getSubmissionById);
+router.post(
+  "/submission/:projectId",
+  body("link").isString(),
+  body("createdAt").optional().isString(),
+  errorHandler,
+  createSubmission
+);
+router.put(
+  "/submission/:submissionId",
+  body("link").isString(),
+  errorHandler,
+  updateSubmission
+);
+router.delete(
+  "/submission/:submissionId",
+  errorHandler,
+  deleteSubmission
+);
+
 
 // ----------------- Course routes -----------------
 

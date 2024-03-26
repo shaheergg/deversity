@@ -1,72 +1,77 @@
 import db from "../db"
 
 // Educator Or Student can get all the resources for a course or a cjust a course's module
-export const getAllResources = async (req, res) => {
+// Get all resources for a course
+export const getResourcesForCourse = async (req, res) => {
   try {
-    const { courseId, moduleId } = req.params;
-    let resources;
-
-    if (courseId) {
-      resources = await db.resource.findMany({
-        where: {
-          courseId: courseId,
-        },
-      });
-    } else if (moduleId) {
-      resources = await db.resource.findMany({
-        where: {
-          moduleId: moduleId,
-        },
-      });
-    } else {
-      // Handle error when neither courseId nor moduleId is provided
-      return res.status(400).send("Both courseId and moduleId are missing");
-    }
-
+    const { courseId } = req.params;
+    const resources = await db.resource.findMany({
+      where: { courseId },
+    });
     res.status(200).send({ data: resources });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("An error occurred while fetching resources");
+    console.error("Error fetching resources for course:", error);
+    res.status(500).send("An error occurred while fetching resources for course");
   }
 };
 
+// Get all resources for a module
+export const getResourcesForModule = async (req, res) => {
+  try {
+    const { moduleId } = req.params;
+    const resources = await db.resource.findMany({
+      where: { moduleId },
+    });
+    res.status(200).send({ data: resources });
+  } catch (error) {
+    console.error("Error fetching resources for module:", error);
+    res.status(500).send("An error occurred while fetching resources for module");
+  }
+};
 
 // Add a new resource to a module within a course
-export const addResource = async (req, res) => {
+export const addResourceToModule = async (req, res) => {
   try {
-    const { courseId, moduleId } = req.params;
-    const { title, description, url, sectionId, type } = req.body;
+    const { moduleId } = req.params;
+    const { title, description, url, type } = req.body;
 
-    let newResource;
+    const newResource = await db.resource.create({
+      data: {
+        title,
+        description,
+        url,
+        type,
+        moduleId,
+      },
+    });
 
-    // Check if sectionId is provided
-    if (moduleId) {
-      // Adding resource to a module
-      newResource = await db.resource.create({
-        data: {
-          title,
-          description,
-          url,
-          type,
-          moduleId,
-        },
-      });
-    } else {
-      // Adding resource to a course
-      newResource = await db.resource.create({
-        data: {
-          title,
-          description,
-          url,
-          type,
-          courseId,
-        },
-      });
-    }
     res.status(200).json({ data: newResource });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("An error occurred while adding a resource");
+    console.error("Error adding resource to module:", error);
+    res.status(500).send("An error occurred while adding a resource to the module");
+  }
+};
+
+// Add a new resource to a course
+export const addResourceToCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { title, description, url, type } = req.body;
+
+    const newResource = await db.resource.create({
+      data: {
+        title,
+        description,
+        url,
+        type,
+        courseId,
+      },
+    });
+
+    res.status(200).json({ data: newResource });
+  } catch (error) {
+    console.error("Error adding resource to course:", error);
+    res.status(500).send("An error occurred while adding a resource to the course");
   }
 };
   
@@ -74,7 +79,7 @@ export const addResource = async (req, res) => {
   export const updateResource = async (req, res) => {
     try {
       const { resourceId } = req.params;
-      const { title, description, url, sectionId, type } = req.body;
+      const { title, description, url, type } = req.body;
   
       const updatedResource = await db.resource.update({
         where: { id: resourceId },
