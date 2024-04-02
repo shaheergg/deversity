@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
-import Logo from "../components/Logo";
+import Logo from "../../components/Logo";
 import { toast } from "sonner";
 import { useState } from "react";
-import { validateEmail } from "../lib/utils";
-import { useAuthStore } from "../store/auth";
-import { ROLES } from "../constants";
+import { validateEmail } from "../../lib/utils";
+import { useAuthStore } from "../../store/auth";
+import { ROLES } from "../../constants";
 
-function Login() {
+function EducatorLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const role = ROLES.STUDENT;
   const login = useAuthStore((state) => state.login);
   const submitForm = (e) => {
     e.preventDefault();
@@ -25,7 +24,7 @@ function Login() {
       toast.error("Please fill in all fields");
       return;
     }
-    login({ email, password }, ROLES.STUDENT);
+    login({ email, password }, ROLES.EDUCATOR);
   };
   return (
     <>
@@ -36,7 +35,7 @@ function Login() {
         <div className="max-w-4xl px-6 py-4 mx-auto rounded font-grotesk">
           <div>
             <h1 className="max-w-lg text-2xl text-center">
-              Sign in to your account to continue learning
+              Sign in to your account to continue teaching
             </h1>
           </div>
           <div className="py-4">
@@ -79,7 +78,7 @@ function Login() {
         </div>
         <div className="w-[40%] px-6 py-6 mt-4 text-center rounded">
           Or{" "}
-          <Link to="/signup" className="font-bold text-premium">
+          <Link to="/educator/signup" className="font-bold text-premium">
             click here
           </Link>{" "}
           to create your free account.
@@ -89,4 +88,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default EducatorLogin;
