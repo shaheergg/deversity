@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function Logo() {
+function LogoDark() {
   return (
-    <Link to="/" className="flex items-center gap-3">
+    <Link to="/" className="flex items-center gap-3 text-white">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="32"
@@ -26,11 +26,9 @@ function Logo() {
           d="M144.263 140.832c.646-.323 1.179 0 1.195.92l.064 7.008a12.917 12.917 0 0 1 7.718-.937c.501.13.71.808.517 1.615l-1.534 6.152a2.648 2.648 0 0 1-.694 1.227a1.615 1.615 0 0 1-.404.29a.92.92 0 0 1-.597.098a10.237 10.237 0 0 0-7.444 1.194a9.349 9.349 0 0 0-5.506 8.284c0 3.229 1.615 4.117 7.25 4.214c7.444.13 10.673 3.375 10.754 10.883a26.69 26.69 0 0 1-9.882 20.135l.13 6.878a2.519 2.519 0 0 1-1.18 2.1l-4.068 2.34c-.646.323-1.18 0-1.195-.904v-6.765c-3.488 1.453-7.024 1.792-9.285.888c-.42-.162-.613-.791-.436-1.518l1.47-6.216a2.6 2.6 0 0 1 .726-1.292c.115-.11.246-.203.388-.275a.807.807 0 0 1 .662 0c2.878.78 5.948.392 8.541-1.081a11.173 11.173 0 0 0 6.314-9.688c0-3.488-1.922-4.941-6.459-4.974c-5.861 0-11.303-1.13-11.416-9.688a25.027 25.027 0 0 1 9.462-19.15l-.29-7.04a2.503 2.503 0 0 1 1.178-2.13z"
         ></path>
       </svg>
-      <span className="text-3xl font-semibold text-secondary font-grotesk">
-        Deversity.
-      </span>
+      <span className="text-3xl font-semibold font-grotesk">Deversity.</span>
     </Link>
   );
 }
 
-export default Logo;
+export default LogoDark;
