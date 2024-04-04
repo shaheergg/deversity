@@ -14,7 +14,7 @@ const HeroSection = () => {
         learners today.
       </p>
       <div className="flex items-center gap-4 space-x-4">
-        <Link className="flex items-center gap-2 px-4 py-2 text-sm font-semibold border-2 rounded font-grotesk hover:bg-primary-hover border-primary bg-primary text-secondary">
+        <Link to="/signup" className="flex items-center gap-2 px-4 py-2 text-sm font-semibold border-2 rounded font-grotesk hover:bg-primary-hover border-primary bg-primary text-secondary">
           Start your journey
           <svg
             xmlns="http://www.w3.org/2000/svg"
