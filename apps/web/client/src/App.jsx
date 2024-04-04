@@ -14,6 +14,7 @@ import RootLayout from "./layouts/RootLayout";
 import StudentDashboard from "./pages/admin/Dashboard";
 import EducatorLogin from "./pages/educator/Login";
 import { Toaster } from "sonner";
+import EducatorDashboard from "./pages/educator/Dashboard";
 function App() {
   return (
     <>
@@ -29,7 +30,7 @@ function App() {
               <Route path="dashboard" element={<StudentDashboard />} />
             </Route>
             <Route path="/educator" element={<EducatorRoute />}>
-              <Route path="dashboard" element={<Educator />} />
+              <Route path="dashboard" element={<EducatorDashboard />} />
             </Route>
             <Route path="/admin" element={<AdminRoute />}>
               <Route path="dashboard" element={<Admin />} />
