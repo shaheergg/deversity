@@ -19,8 +19,9 @@ export const createUser = async (req, res) => {
         role: await role.toUpperCase(),
       },
     });
+    //console.log(user);
     const jwt = generateJWT(user);
-    res.json({ token: jwt, role: user.role });
+    res.status(200).json({ token: jwt, role: user.role });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

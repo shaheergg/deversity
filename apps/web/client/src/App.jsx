@@ -9,10 +9,12 @@ import AdminRoute from "./routes/AdminRoute";
 import EducatorRoute from "./routes/EducatorRoute";
 import Admin from "./pages/admin/Admin";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp"
 import NotFound from "./pages/NotFound";
 import RootLayout from "./layouts/RootLayout";
 import StudentDashboard from "./pages/admin/Dashboard";
 import EducatorLogin from "./pages/educator/Login";
+import EducatorSignUp from "./pages/educator/SignUp"
 import { Toaster } from "sonner";
 import EducatorDashboard from "./pages/educator/Dashboard";
 function App() {
@@ -24,7 +26,9 @@ function App() {
             <Route path="/" element={<PublicRoute />}>
               <Route path="" element={<LandingPage />} />
               <Route path="login" element={<Login />} />
+              <Route path="signup" element={<SignUp />} />
               <Route path="educator/login" element={<EducatorLogin />} />
+              <Route path="educator/signup" element={<EducatorSignUp />} />
             </Route>
             <Route path="/student" element={<StudentRoute />}>
               <Route path="dashboard" element={<StudentDashboard />} />
