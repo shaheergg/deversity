@@ -12,11 +12,12 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp"
 import NotFound from "./pages/NotFound";
 import RootLayout from "./layouts/RootLayout";
-import StudentDashboard from "./pages/admin/Dashboard";
+import StudentDashboard from "./pages/student/Dashboard";
 import EducatorLogin from "./pages/educator/Login";
 import EducatorSignUp from "./pages/educator/SignUp"
 import { Toaster } from "sonner";
 import EducatorDashboard from "./pages/educator/Dashboard";
+
 function App() {
   return (
     <>
