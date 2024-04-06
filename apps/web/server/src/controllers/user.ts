@@ -20,6 +20,7 @@ export const createUser = async (req, res) => {
       },
     });
     //console.log(user);
+    
     const jwt = generateJWT(user);
     res.status(200).json({ token: jwt, role: user.role });
   } catch (error) {
