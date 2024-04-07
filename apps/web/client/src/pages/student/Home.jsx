@@ -54,7 +54,7 @@ const Home = () => {
                             alt=""
                         />
                     </div>
-                    <div className="flex flex-col font-grotesk gap-4 flex-grow">
+                    <div className="flex flex-col font-grotesk gap-1 flex-grow">
                         <div className='text-2xl font-bold'>
                             Hey, Muhammad
                         </div>
@@ -63,7 +63,7 @@ const Home = () => {
                                 <div className="bg-primary h-2.5 rounded-full" style={{ width: '45%' }}></div>
 
                             </div>
-                            <div className="text-xl">
+                            <div className="text-lg">
                                 Skill Mastery
                             </div>
                         </div>

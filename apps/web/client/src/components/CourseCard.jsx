@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
     console.log(course);
@@ -21,6 +22,12 @@ const CourseCard = ({ course }) => {
         } else {
             return description;
         }
+    };
+
+    const handleClick = () => {
+        
+        console.log("Button clicked!");
+        return <Navigate to="/student/learn/course" state={{ course: course }} />;
     };
     return (
         <>
@@ -58,11 +65,11 @@ const CourseCard = ({ course }) => {
                     </div>
                 </div>
                 <div>
-                    <Link to="/singlecourse">
-                        <button className="hover:bg-secondary hover:text-white text-black px-4 py-2 border-slate-800 border-2 right-1">
+                    
+                        <button onClick={handleClick} className="hover:bg-secondary hover:text-white text-black px-4 py-2 border-slate-800 border-2 right-1">
                             {buttonText}
                         </button>
-                    </Link>
+                
                 </div>
 
 

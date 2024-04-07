@@ -35,20 +35,26 @@ const StudentDashboard = () => {
             Learn
           </Link>
           <Link
-            className="px-4 py-2 text-sm rounded-full hover:bg-gray-200"
-            to="/learn"
+            className={`px-4 py-2 text-sm rounded-full ${
+              selectedPage === "Catalog" ? "bg-secondary text-white" : "bg-gray-100 hover:bg-gray-200"
+            }`}
+            onClick={handleClick}
           >
             Catalog
           </Link>
           <Link
-            className="px-4 py-2 text-sm rounded-full hover:bg-gray-200"
-            to="/learn"
+            className={`px-4 py-2 text-sm rounded-full ${
+              selectedPage === "Enrolled" ? "bg-secondary text-white" : "bg-gray-100 hover:bg-gray-200"
+            }`}
+            onClick={handleClick}
           >
             Enrolled
           </Link>
           <Link
-            className="px-4 py-2 text-sm rounded-full hover:bg-gray-200"
-            to="/learn"
+            className={`px-4 py-2 text-sm rounded-full ${
+              selectedPage === "Projects" ? "bg-secondary text-white" : "bg-gray-100 hover:bg-gray-200"
+            }`}
+            onClick={handleClick}
           >
             Projects
           </Link>

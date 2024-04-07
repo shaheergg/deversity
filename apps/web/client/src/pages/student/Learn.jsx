@@ -100,7 +100,7 @@ const Learn = () => {
               alt=""
             />
           </div>
-          <div className="flex flex-col gap-4 flex-grow">
+          <div className="flex flex-col gap-1 flex-grow">
             <div className='text-2xl font-bold'>
               Hey, Muhammad
             </div>
@@ -115,7 +115,7 @@ const Learn = () => {
             </div>
           </div>
           <div className="right-0 border-2 border-gray-200 rounded-full">
-            <div className="text-lg font-semibold p-2">
+            <div className="text-lg font-semibold p-3">
               Daily Xp <span className="bg-slate-800 text-white rounded-full px-2 text-sm py-1">0 Xp</span>
             </div>
           </div>
