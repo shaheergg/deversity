@@ -13,7 +13,7 @@ const EducatorDashboard = () => {
               verified
             </span>
           </h2>
-          <div>
+          <div className="flex flex-row">
             <Link
               to="/"
               className="flex items-center gap-2 px-4 py-2 text-white rounded-md hover:bg-secondary/70 bg-secondary"
@@ -42,6 +42,17 @@ const EducatorDashboard = () => {
                 />
               </svg>
               Create Course
+            </Link>
+            <Link
+              to="/"
+              onClick={(e)=>{
+                e.preventDefault();
+                localStorage.clear();
+                window.location.reload();
+              }}
+              className="flex items-center gap-2 px-4 ml-2 py-2 text-black rounded-md hover:bg-secondary/70 bg-primary"
+            >
+              Logout
             </Link>
           </div>
         </div>
