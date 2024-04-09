@@ -91,7 +91,7 @@ const Home = () => {
 
                 </div>
                 <hr></hr>
-                <div className="flex flex-row p-6 font-grotesk gap-2">
+                <div className="flex p-6 font-grotesk gap-2">
                     <div className="flex-1">
                         <div className="text-xl font-bold">
                             Current Streak
@@ -102,7 +102,7 @@ const Home = () => {
                     </div>
 
                     <div className="flex-1">
-                        <div className="flex flex-row font-bold text-base">
+                        <div className="flex flex-row gap-6 font-bold text-base">
                             <div className="rounded-full w-8 h-8 border-2 text-center">
                                 M
                             </div>
@@ -115,7 +115,7 @@ const Home = () => {
                             <div className="rounded-full w-8 h-8 border-2 text-center">
                                 T
                             </div>
-                            <div className="rounded-full w-8 h-8 border-2 text-center bg-primary">
+                            <div className="rounded-full w-8 h-8 border-2 text-center bg-secondary text-white">
                                 F
                             </div>
                             <div className="rounded-full w-8 h-8 border-2 text-center">
