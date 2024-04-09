@@ -1,94 +1,85 @@
-// work done by Muhammad Nabeel
+import db from "../db";
 
-import db from '../db';
-
-/**
- * @param req
- * @param res
- * @returns object
- * @description create a submission
- */
-
-export const getSubmissions = async (req, res) => {
-  const { studentId } = req.params;
+// Get all submissions for a project
+export const getAllSubmissionsForProject = async (req, res) => {
   try {
+    const { projectId } = req.params;
     const submissions = await db.submission.findMany({
-      where: { studentId },
+      where: { projectId },
     });
-    res.status(200).send({ data: submissions });
+    res.status(200).json({ data: submissions });
   } catch (error) {
-    console.error(error);
-    res.status(500).send("An error occurred while fetching submissions");
+    console.error("Error getting submissions for project:", error);
+    res.status(500).send("An error occurred while fetching submissions.");
   }
 };
 
-/**
- * @param req
- * @param res
- * @returns object
- * @description create a submission
- */
-
-export const createSubmission = async (req, res) => {
-const { studentId, projectId, link } = req.body;
-try {
-    const submission = await db.submission.create({
-        data: {
-            link,
-            studentId, // Assuming studentId is a number, convert it to the appropriate type
-
-            projectId,
-        },
-    });
-    res.status(201).send({ message: "Submission created successfully", data: submission });
-} catch (error) {
-    console.error(error);
-    res.status(500).send("An error occurred while creating the submission");
-}
-}
-
-/**
- * @param req
- * @param res
- * @returns object
- * @description edit a submission
- */
-
-export const editSubmission = async (req, res) => {
-  const { id } = req.params;
-  const { link } = req.body;
+// Get a submission by ID
+export const getSubmissionById = async (req, res) => {
   try {
-    const submission = await db.submission.update({
-      where: { id },
+    const { submissionId } = req.params;
+    const submission = await db.submission.findUnique({
+      where: { id: submissionId },
+    });
+    if (!submission) {
+      return res.status(404).send("Submission not found.");
+    }
+    res.status(200).json({ data: submission });
+  } catch (error) {
+    console.error("Error getting submission:", error);
+    res.status(500).send("An error occurred while fetching the submission.");
+  }
+};
+
+// Create a new submission
+export const createSubmission = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const { link, studentId } = req.body;
+    const newSubmission = await db.submission.create({
       data: {
         link,
+        studentId,
+        projectId,
       },
     });
-    res.status(200).send({ message: "Submission updated successfully", data: submission });
+    res.status(201).json({ data: newSubmission });
   } catch (error) {
-    console.error(error);
-    res.status(500).send("An error occurred while updating the submission");
+    console.error("Error creating submission:", error);
+    res.status(500).send("An error occurred while creating the submission.");
   }
-}
+};
 
-
-/**
- * @param req
- * @param res
- * @returns object
- * @description delete a submission
- */
-
-
-export const deleteSubmission = async (req, res) => {
-  const { id } = req.params;
+// Update an existing submission
+export const updateSubmission = async (req, res) => {
   try {
-    await db.submission.delete({
-      where: { id },
+    const { submissionId } = req.params;
+    const { link, studentId } = req.body;
+    const updatedSubmission = await db.submission.update({
+      where: { id: submissionId },
+      data: {
+        link,
+        studentId,
+      },
     });
-    res.status(200).send({ message: "Submission deleted successfully" });
+    res.status(200).json({ data: updatedSubmission });
   } catch (error) {
-    console.error(error);
-    res.status(500).send("An error occurred while deleting the submission");
+    console.error("Error updating submission:", error);
+    res.status(500).send("An error occurred while updating the submission.");
   }
-}
+};
+
+// Delete a submission
+export const deleteSubmission = async (req, res) => {
+  try {
+    const { submissionId } = req.params;
+    await db.submission.delete({
+      where: { id: submissionId },
+    });
+    res.status(204).end();
+  } catch (error) {
+    console.error("Error deleting submission:", error);
+    res.status(500).send("An error occurred while deleting the submission.");
+  }
+};
+

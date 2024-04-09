@@ -82,7 +82,7 @@ model Resource {
   url         String
   Course      Course?      @relation(fields: [courseId], references: [id])
   module      Module?      @relation(fields: [moduleId], references: [id])
-  moduleId    String?
+  moduleId    Int?
   sectionId   String?
   type        ResourceType
   courseId    String?
@@ -104,7 +104,7 @@ model Section {
 }
 
 model Module {
-  id        String     @id @unique @default(uuid())
+  id        Int        @id @unique @default(autoincrement())
   title     String
   content   String?
   notes     Note[]
@@ -118,7 +118,7 @@ model Note {
   title       String?
   description String
   Module      Module  @relation(fields: [moduleId], references: [id])
-  moduleId    String
+  moduleId    Int
 }
 
 // submission model to store the project submissions
@@ -133,13 +133,13 @@ model Submission {
 }
 
 model Credential {
-  id          String    @id @unique @default(cuid())
+  id          String         @id @unique @default(cuid())
   title       String
   description String?
   url         String
   file        String?
   type        CredentialType
-  Educator    Educator? @relation(fields: [educatorId], references: [id])
+  Educator    Educator?      @relation(fields: [educatorId], references: [id])
   educatorId  String?
 }
 
