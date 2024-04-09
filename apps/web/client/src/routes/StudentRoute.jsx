@@ -8,6 +8,7 @@ const StudentRoute = () => {
   const role = useAuthStore((state) => state.role);
 
   if (auth && role === "student") {
+    
     return <Outlet />;
   }
 

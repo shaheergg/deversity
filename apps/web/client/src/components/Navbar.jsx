@@ -15,7 +15,7 @@ function Navbar() {
         </Link>
 
         <Link
-          to="/courses"
+          to="/educator/signup"
           className="px-4 py-2 font-sans text-sm rounded cursor-pointer hover:bg-gray-100"
         >
           For Educators

@@ -91,9 +91,9 @@ router.post(
 
 // ----------------- Educator routes -----------------
 
-router.get("/eductors", adminAccess, getEducators);
+router.get("/educators", adminAccess, getEducators);
 router.post(
-  "/eductors",
+  "/educators",
   body("name").isString(),
   body("about").isString(),
   errorHandler,
@@ -107,7 +107,7 @@ router.get("/students", adminAccess, getStudents);
 router.post(
   "/students",
   body("name").isString(),
-  body("dob").isDate(),
+  body("dob").isString(),
   body("school").isString(),
   errorHandler,
   createStudent
