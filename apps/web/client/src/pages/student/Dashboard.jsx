@@ -1,15 +1,14 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../components/Logo";
 import Home from "../student/Home";
 import Learn from "../student/Learn";
 const StudentDashboard = () => {
-  
   const [selectedPage, setSelectedPage] = useState("Home");
-  const handleClick=(e)=>{
+  const handleClick = (e) => {
     e.preventDefault();
     setSelectedPage(e.target.textContent);
-  }
+  };
   return (
     <div>
       <div className="sticky top-0 flex items-center gap-8 px-4 py-3 bg-white border-b shadow">
@@ -19,16 +18,19 @@ const StudentDashboard = () => {
         <div className="flex items-center justify-between px-1 py-1 bg-gray-100 rounded-full">
           <Link
             className={`px-4 py-2 text-sm rounded-full ${
-              selectedPage === "Home" ? "bg-secondary text-white" : "bg-gray-100 hover:bg-gray-200"
+              selectedPage === "Home"
+                ? "bg-secondary text-white"
+                : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={handleClick}
-            
           >
             Home
           </Link>
           <Link
             className={`px-4 py-2 text-sm rounded-full ${
-              selectedPage === "Learn" ? "bg-secondary text-white" : "bg-gray-100 hover:bg-gray-200"
+              selectedPage === "Learn"
+                ? "bg-secondary text-white"
+                : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={handleClick}
           >
@@ -36,7 +38,9 @@ const StudentDashboard = () => {
           </Link>
           <Link
             className={`px-4 py-2 text-sm rounded-full ${
-              selectedPage === "Catalog" ? "bg-secondary text-white" : "bg-gray-100 hover:bg-gray-200"
+              selectedPage === "Catalog"
+                ? "bg-secondary text-white"
+                : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={handleClick}
           >
@@ -44,7 +48,9 @@ const StudentDashboard = () => {
           </Link>
           <Link
             className={`px-4 py-2 text-sm rounded-full ${
-              selectedPage === "Enrolled" ? "bg-secondary text-white" : "bg-gray-100 hover:bg-gray-200"
+              selectedPage === "Enrolled"
+                ? "bg-secondary text-white"
+                : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={handleClick}
           >
@@ -52,7 +58,9 @@ const StudentDashboard = () => {
           </Link>
           <Link
             className={`px-4 py-2 text-sm rounded-full ${
-              selectedPage === "Projects" ? "bg-secondary text-white" : "bg-gray-100 hover:bg-gray-200"
+              selectedPage === "Projects"
+                ? "bg-secondary text-white"
+                : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={handleClick}
           >
@@ -92,7 +100,7 @@ const StudentDashboard = () => {
           </Link>
           <Link
             className="px-3 py-2 text-sm text-black rounded hover:bg-primary-hover bg-primary"
-            onClick={()=>{
+            onClick={() => {
               localStorage.clear();
               window.location.reload();
             }}
@@ -142,9 +150,8 @@ const StudentDashboard = () => {
           </Dropdown> */}
         </div>
       </div>
-      {selectedPage === "Home" && <Home/>}
-      {selectedPage === "Learn" && <Learn/>}
-      
+      {selectedPage === "Home" && <Home />}
+      {selectedPage === "Learn" && <Learn />}
     </div>
   );
 };
