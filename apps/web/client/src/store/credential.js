@@ -16,7 +16,6 @@ export const useCredentialStore = create((set) => ({
       const credentials = await response.json();
       if (response.ok) {
         set({ credentials: credentials.data });
-        toast.success("Credentials fetched successfully");
       } else {
         toast.error("Failed to fetch credentials");
       }

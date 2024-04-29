@@ -4,8 +4,8 @@ import { body } from "express-validator";
 import { errorHandler } from "./middlewares/errorHandler";
 import {
   createEducator,
+  getEducator,
   getEducators,
-  getEductor,
 } from "./controllers/educator";
 import {
   getResourcesForCourse,
@@ -99,7 +99,8 @@ router.post(
   errorHandler,
   createEducator
 );
-// router.get("/eductors/:id", adminAccess, getEductor);
+
+router.get("/educator", getEducator);
 
 // ----------------- Student routes -----------------
 
@@ -241,14 +242,15 @@ router.delete("/submission/:submissionId", errorHandler, deleteSubmission);
 
 // ----------------- Course routes -----------------
 
-router.get("/courses/:educatorId", getCourses);
+router.get("/courses", getCourses);
 router.get("/course/:id", getCourseDetails);
 router.post(
-  "/courses/:educatorId",
+  "/courses",
   body("title").isString(),
   body("description").isString(),
   body("summary").isString(),
   body("coverPhoto").isString().optional(),
+  body("level").isString().isIn(["Beginner", "Intermediate", "Pro"]),
   errorHandler,
   createCourse
 );
