@@ -142,6 +142,67 @@ router.put(
 );
 router.delete("/credentials/:id", deleteCredential);
 
+<<<<<<< HEAD
+// ----------------- Submission routes -----------------
+import {
+  createSubmission,
+  getSubmissions,
+  editSubmission,
+  deleteSubmission,
+} from "./controllers/submission";
+
+router.get("/submissions/:studentId", getSubmissions);
+router.post(
+  "/submissions",
+  body("studentId").isString(),
+  body("link").isString(),
+  createSubmission
+);
+
+router.put(
+  "/submissions/:id",
+  body("id").isString(),
+  body("link").isString(),
+  editSubmission
+);
+
+router.delete("/submissions/:id", deleteSubmission);
+
+
+
+// ----------------- Project routes -----------------
+
+import {
+  createProject,
+  getProjects,
+  editProject,
+  deleteProject,
+} from "./controllers/project";
+
+
+router.get("/projects/:id", getProjects);
+router.post(
+  "/projects",
+  body("title").isString(),
+  body("description").isString().optional(),
+  body("url").isString(),
+  body("courseId").isString(),
+  createProject
+);
+
+router.put(
+  "/projects/:id",
+  body("title").isString(),
+  body("description").isString().optional(),
+  body("url").isString(),
+  body("courseId").isString(),
+  editProject
+);
+
+
+router.delete("/projects/:id", deleteProject);
+
+=======
 // // --------------------- Resource Routes-------------------------
 
 router.get("/course/resources/:courseId", errorHandler, getResourcesForCourse);
@@ -307,5 +368,6 @@ router.put(
 router.get("/students/:studentId/enrollments", getStudentEnrollments);
 router.get("/courses/:courseId/enrollments", getCourseEnrollments);
 router.post("/students/:studentId/courses/:courseId/enroll", enrollCourse);
+>>>>>>> 6b10afb11ee07548e8de99d7fbc34384c4673e35
 
 export default router;
