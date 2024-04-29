@@ -19,6 +19,8 @@ import { Toaster } from "sonner";
 import EducatorDashboard from "./pages/educator/Dashboard";
 import Course from "./pages/student/Course";
 import CredentialsPage from "./pages/educator/Credentials";
+import CreateCourse from "./pages/educator/CreateCourse";
+import EducatorCourses from "./pages/educator/Courses";
 function App() {
   return (
     <>
@@ -39,6 +41,8 @@ function App() {
             <Route path="/educator" element={<EducatorRoute />}>
               <Route path="dashboard" element={<EducatorDashboard />} />
               <Route path="credentials" element={<CredentialsPage />} />
+              <Route path="create-course" element={<CreateCourse />} />
+              <Route path="courses" element={<EducatorCourses />} />
             </Route>
             <Route path="/admin" element={<AdminRoute />}>
               <Route path="dashboard" element={<Admin />} />

@@ -4,7 +4,7 @@ const Selectbox = ({ options, value, setValue }) => {
   return (
     <Listbox value={value} onChange={setValue}>
       <div className="relative mt-1">
-        <Listbox.Button className="flex justify-start w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm outline-none focus:ring-1 focus:ring-secondary focus:border-secondary sm:text-sm">
+        <Listbox.Button className="flex-1 block w-full px-4 py-3 text-left text-gray-900 bg-transparent border rounded-md placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
           <span className="block truncate">{value}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <svg

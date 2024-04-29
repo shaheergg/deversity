@@ -13,3 +13,5 @@ export const CREDENTIAL_TYPES = [
   "License",
   "Other",
 ];
+
+export const LEVELS = ["Beginner", "Intermediate", "Pro"];

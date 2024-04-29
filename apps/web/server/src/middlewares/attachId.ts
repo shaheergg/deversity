@@ -2,6 +2,7 @@ import { AnyARecord } from "dns";
 import db from "../db";
 
 export const attachId = async (req, res, next) => {
+  console.log(req.user.role.toLowerCase());
   try {
     let role = req.user.role.toLowerCase();
     if (!role) {
