@@ -2,7 +2,7 @@ import db from "../db";
 
 export const getCourses = async (req, res) => {
   try {
-    const educatorId = req.educatorId;
+    const { educatorId } = req.params;
     const courses = await db.course.findMany({
       where: { educatorId },
     });
@@ -38,7 +38,7 @@ export const getCourseDetails = async (req, res) => {
 };
 
 export const createCourse = async (req, res) => {
-  const educatorId = req.educatorId;
+  const { educatorId } = req.params;
   console.log(educatorId);
   const { title, description, summary, level, coverPhoto } = req.body;
   const upperCaseLevel = level.toUpperCase();

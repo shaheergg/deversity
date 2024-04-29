@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useCourseStore } from "../../store/course";
 import { useAuthStore } from "../../store/auth";
 import { useEducatorStore } from "../../store/educator";
+import EmptyState from "../../components/EmptyState";
 
 const EducatorDashboard = () => {
   const getCourses = useCourseStore((state) => state.getCourses);
@@ -11,8 +12,10 @@ const EducatorDashboard = () => {
   const courses = useCourseStore((state) => state.courses);
   const fetchEducator = useEducatorStore((state) => state.fetchEducator);
   const educator = useEducatorStore((state) => state.educator);
+  const user = useAuthStore((state) => state.user);
   useEffect(() => {
-    getCourses(token);
+    const parsedUser = JSON.parse(user);
+    getCourses(token, parsedUser?.id);
   }, [getCourses]);
   useEffect(() => {
     fetchEducator(token);
@@ -119,43 +122,53 @@ const EducatorDashboard = () => {
           </div>
           <div className="divide-y divide-gray-200">
             <div className="space-y-4 rounded-md">
-              {courses?.map((course) => {
-                return (
-                  <div
-                    key={course.id}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-gray-200 rounded-md">
-                        <img
-                          src={course?.coverPhoto}
-                          className="object-cover w-full h-full rounded-md"
-                          alt="cover-img"
-                        />
+              {courses?.length === 0 && (
+                <EmptyState
+                  headline={
+                    "No courses found, Don't worry you can always create one!"
+                  }
+                  actionText={"Create Course"}
+                  link={"/educator/create-course"}
+                />
+              )}
+              {courses?.length > 0 &&
+                courses?.map((course) => {
+                  return (
+                    <div
+                      key={course.id}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-gray-200 rounded-md">
+                          <img
+                            src={course?.coverPhoto}
+                            className="object-cover w-full h-full rounded-md"
+                            alt="cover-img"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="flex items-center gap-2 text-xl font-semibold font-grotesk">
+                            {course?.title}
+                            <span className="px-2 py-1 text-xs font-medium text-white bg-gray-600 rounded-md">
+                              {course.published ? "Published" : "Draft"}
+                            </span>
+                          </h3>
+                          <p className="max-w-lg text-sm font-medium text-gray-500 truncate">
+                            {course?.description}
+                          </p>
+                        </div>
                       </div>
                       <div>
-                        <h3 className="flex items-center gap-2 text-xl font-semibold font-grotesk">
-                          {course?.title}
-                          <span className="px-2 py-1 text-xs font-medium text-white bg-gray-600 rounded-md">
-                            {course.published ? "Published" : "Draft"}
-                          </span>
-                        </h3>
-                        <p className="max-w-lg text-sm font-medium text-gray-500 truncate">
-                          {course?.description}
-                        </p>
+                        <Link
+                          to="/"
+                          className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
+                        >
+                          View
+                        </Link>
                       </div>
                     </div>
-                    <div>
-                      <Link
-                        to="/"
-                        className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
-                      >
-                        View
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>{" "}
           </div>
         </div>

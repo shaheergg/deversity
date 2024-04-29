@@ -1,7 +1,7 @@
-import { AnyARecord } from "dns";
 import db from "../db";
 
 export const attachId = async (req, res, next) => {
+  console.log(req.user.id);
   console.log(req.user.role.toLowerCase());
   try {
     let role = req.user.role.toLowerCase();
@@ -10,8 +10,8 @@ export const attachId = async (req, res, next) => {
     }
     role = role.toLowerCase();
 
-    let idField: string;
-    let entity: string;
+    let idField;
+    let entity;
 
     switch (role) {
       case "educator":
@@ -36,14 +36,17 @@ export const attachId = async (req, res, next) => {
       },
     });
 
+    console.log(userData);
+
     if (!userData) {
       throw new Error(`${role} data not found for this user`);
     }
 
     req.body[idField] = userData.id;
-
+    console.log(req.body[idField]);
     next();
   } catch (error) {
+    console.log(String(error));
     next(error);
   }
 };

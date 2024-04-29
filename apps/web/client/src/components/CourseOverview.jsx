@@ -14,11 +14,13 @@ const CourseOverview = () => {
   const [loading, setLoading] = useState(false);
   const token = useAuthStore((state) => state.token);
   const createCourse = useCourseStore((state) => state.createCourse);
+  const user = useAuthStore((state) => state.user);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) return;
     if (!title || !description || !difficulty || !summary)
       return toast.error("Please fill all fields");
+
     const course = {
       title,
       description,
@@ -28,7 +30,8 @@ const CourseOverview = () => {
     };
     setLoading(true);
     try {
-      await createCourse(course, token);
+      const jsonEducator = JSON.parse(user);
+      await createCourse(course, token, jsonEducator?.id);
       // Handle successful response (e.g., show success message)
       setLoading(false);
       Navigate("/educator/courses", { replace: true });
