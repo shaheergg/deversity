@@ -9,7 +9,7 @@ import db from "../db";
 
 export const getCredentials = async (req, res) => {
   try {
-    const educatorId = req.educatorId;
+    const { educatorId } = req.params;
     const credentials = await db.credential.findMany({
       where: { educatorId },
     });
@@ -28,7 +28,7 @@ export const getCredentials = async (req, res) => {
  */
 
 export const createCredential = async (req, res) => {
-  const educatorId = req.educatorId;
+  const { educatorId } = req.params;
   const { title, description, url, type } = req.body;
   try {
     const credential = await db.credential.create({

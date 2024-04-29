@@ -12,6 +12,7 @@ const AddCredentialModal = ({ isOpen, setIsOpen }) => {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
   const createCredential = useCredentialStore(
     (state) => state.createCredential
   );
@@ -20,6 +21,7 @@ const AddCredentialModal = ({ isOpen, setIsOpen }) => {
     setIsOpen(false);
   };
   const submitForm = () => {
+    const parsedUser = JSON.parse(user);
     if (!title || !url || !description) {
       toast.error("Please fill all fields");
       return;
@@ -35,7 +37,8 @@ const AddCredentialModal = ({ isOpen, setIsOpen }) => {
         url,
         description,
       },
-      token
+      token,
+      parsedUser?.id
     );
     setIsOpen(false);
   };

@@ -74,6 +74,7 @@ import {
   updateProject,
   deleteProject,
 } from "./controllers/project";
+import { attachId } from "./middlewares/attachId";
 
 const router = Router();
 
@@ -100,7 +101,7 @@ router.post(
   createEducator
 );
 
-router.get("/educator", getEducator);
+router.get("/educator", attachId, getEducator);
 
 // ----------------- Student routes -----------------
 
@@ -118,15 +119,16 @@ router.post(
 
 // ----------------- Credential routes -----------------
 
-router.get("/credentials", getCredentials);
+router.get("/credentials/:educatorId", getCredentials);
 router.post(
-  "/credentials",
+  "/credentials/:educatorId",
   body("title").isString(),
   body("description").isString().optional(),
   body("url").isString(),
   body("type")
     .isString()
     .isIn(["Certificate", "Diploma", "Degree", "License", "Other"]),
+  attachId,
   errorHandler,
   createCredential
 );
@@ -242,10 +244,10 @@ router.delete("/submission/:submissionId", errorHandler, deleteSubmission);
 
 // ----------------- Course routes -----------------
 
-router.get("/courses", getCourses);
+router.get("/courses/:educatorId", getCourses);
 router.get("/course/:id", getCourseDetails);
 router.post(
-  "/courses",
+  "/courses/:educatorId",
   body("title").isString(),
   body("description").isString(),
   body("summary").isString(),

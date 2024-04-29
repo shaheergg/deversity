@@ -10,8 +10,10 @@ const CredentialsPage = () => {
   const token = useAuthStore((state) => state.token);
   const getCredentials = useCredentialStore((state) => state.getCredentials);
   const credentials = useCredentialStore((state) => state.credentials);
+  const user = useAuthStore((state) => state.user);
   useEffect(() => {
-    getCredentials(token);
+    const parsedUser = JSON.parse(user);
+    getCredentials(token, parsedUser?.id);
   }, []);
 
   console.log(credentials);
