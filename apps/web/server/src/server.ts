@@ -4,6 +4,7 @@ import cors from "cors";
 import router from "./router";
 import { protect } from "./middlewares/auth";
 import { createUser, signIn } from "./controllers/user";
+import { attachId } from "./middlewares/attachId";
 const app = express();
 
 app.use(cors());

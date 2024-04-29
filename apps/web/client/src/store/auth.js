@@ -52,11 +52,11 @@ export const useAuthStore = create((set) => ({
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "authorization": `Bearer ${localStorage.getItem("token")}`
+              authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             body: JSON.stringify(data),
           });
-          
+
           //console.log("--------------",res);
 
           if (response.ok) {
@@ -69,10 +69,14 @@ export const useAuthStore = create((set) => ({
       } else {
         toast.error(res.message);
       }
-
     } catch (error) {
       console.error("Error:", error);
       toast.error("An error occurred. Please try again later");
     }
+  },
+  logout: () => {
+    set({ auth: false, token: null });
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
   },
 }));
