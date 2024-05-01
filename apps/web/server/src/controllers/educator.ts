@@ -55,6 +55,7 @@ export const createEducator = async (req, res) => {
 
 export const getEducator = async (req, res) => {
   const educatorId = req.educatorId;
+  console.log(educatorId);
   try {
     const educator = await db.educator.findUnique({
       where: {
@@ -64,6 +65,7 @@ export const getEducator = async (req, res) => {
     });
 
     if (!educator) {
+      console.log(res);
       return res.status(404).send("Educator not found");
     }
     res.status(200).send({ data: educator });

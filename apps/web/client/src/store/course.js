@@ -3,9 +3,9 @@ import { BASE_URL } from "../constants";
 import { toast } from "sonner";
 export const useCourseStore = create((set) => ({
   courses: [],
-  getCourses: async (token) => {
+  getCourses: async (token, educatorId) => {
     try {
-      const response = await fetch(BASE_URL + "/api/courses", {
+      const response = await fetch(BASE_URL + `/api/courses/${educatorId}`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${token}`,
@@ -29,9 +29,9 @@ export const useCourseStore = create((set) => ({
     }
   },
 
-  createCourse: async (course, token) => {
+  createCourse: async (course, token, educatorId) => {
     try {
-      const response = await fetch(BASE_URL + "/api/courses", {
+      const response = await fetch(BASE_URL + `/api/courses/${educatorId}`, {
         method: "POST",
         headers: {
           authorization: `Bearer ${token}`,
