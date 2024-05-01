@@ -21,6 +21,7 @@ import Course from "./pages/student/Course";
 import CredentialsPage from "./pages/educator/Credentials";
 import CreateCourse from "./pages/educator/CreateCourse";
 import EducatorCourses from "./pages/educator/Courses";
+import Catalog from "./pages/student/Catalog";
 function App() {
   return (
     <>
@@ -37,6 +38,7 @@ function App() {
             <Route path="/student" element={<StudentRoute />}>
               <Route path="dashboard" element={<StudentDashboard />} />
               <Route path="learn/course" element={<Course />} />
+              
             </Route>
             <Route path="/educator" element={<EducatorRoute />}>
               <Route path="dashboard" element={<EducatorDashboard />} />
