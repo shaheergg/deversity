@@ -64,7 +64,7 @@ const Home = () => {
           </div>
           <div className="flex flex-col flex-grow gap-1 font-grotesk">
             <div className="text-2xl font-bold">
-              Hey, {user.name.split(" ")[0]}
+              Hey, {user?.name?.split(" ")[0]}
             </div>
           </div>
         </div>
