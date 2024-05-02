@@ -6,7 +6,6 @@ import HeroSection from "../components/HeroSection";
 const LandingPage = () => {
   return (
     <section>
-      <Navbar />
       <HeroSection />
     </section>
   );
