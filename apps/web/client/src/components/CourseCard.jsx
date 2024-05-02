@@ -54,12 +54,12 @@ const CourseCard = ({ course }) => {
           </div>
         </div>
         <div>
-          <button
+          <Link
             onClick={handleClick}
             className="w-full px-4 py-2 font-semibold border-2 rounded font-grotesk text-secondary hover:bg-primary-hover border-primary bg-primary right-1"
           >
             {buttonText}
-          </button>
+          </Link>
         </div>
       </div>
     </>
