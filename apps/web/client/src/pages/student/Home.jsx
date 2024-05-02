@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -46,28 +46,25 @@ const Home = () => {
         "Learn the fundamentals of Python programming language, including data structures, functions, and control flow.",
     },
   ];
-
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const u = localStorage.getItem("user");
+    setUser(JSON.parse(u));
+  }, []);
   return (
     <>
       <div id="scorecard" className="flex flex-col w-10/12 p-4 m-auto">
-        <div className="flex flex-row flex-wrap items-start gap-5 p-6">
+        <div className="flex flex-row flex-wrap items-center gap-5 p-6">
           <div className="rounded-full bg-lime-500">
             <img
               className="w-16 h-16 bg-gray-800 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              src={`https://api.dicebear.com/8.x/initials/svg?seed=${user?.name}`}
               alt=""
             />
           </div>
           <div className="flex flex-col flex-grow gap-1 font-grotesk">
-            <div className="text-2xl font-bold">Hey, Muhammad</div>
-            <div className="flex flex-row flex-wrap items-center gap-3">
-              <div className="w-2/12 bg-gray-200 rounded-full h-2.5 dark:bg-gray-400">
-                <div
-                  className="bg-primary h-2.5 rounded-full"
-                  style={{ width: "45%" }}
-                ></div>
-              </div>
-              <div className="text-lg">Skill Mastery</div>
+            <div className="text-2xl font-bold">
+              Hey, {user.name.split(" ")[0]}
             </div>
           </div>
         </div>
@@ -86,12 +83,7 @@ const Home = () => {
         <hr></hr>
         <div className="flex flex-row gap-2 p-6 font-grotesk">
           <div className="flex-1">
-            <div className="text-xl font-bold">Current Streak</div>
-            <div>{0} Days</div>
-          </div>
-
-          <div className="flex-1">
-            <div className="flex gap-4 text-base font-bold">
+            <div className="flex justify-end gap-4 text-base font-bold">
               <div className="flex items-center justify-center text-center border rounded-full w-9 h-9">
                 M
               </div>

@@ -3,7 +3,10 @@ export const getCatalog = async (req, res) => {
   try {
     const educatorId = req.educatorId;
     const courses = await db.course.findMany({
-      where:{published:true},
+      where: { published: true },
+      include: {
+        Educator: true,
+      },
     });
 
     res.status(200).send({ data: courses });

@@ -23,6 +23,7 @@ import CreateCourse from "./pages/educator/CreateCourse";
 import EducatorCourses from "./pages/educator/Courses";
 import Catalog from "./pages/student/Catalog";
 import EditCourse from "./pages/educator/EditCourse";
+import Courses from "./pages/Courses";
 function App() {
   return (
     <>
@@ -35,6 +36,7 @@ function App() {
               <Route path="signup" element={<SignUp />} />
               <Route path="educator/login" element={<EducatorLogin />} />
               <Route path="educator/signup" element={<EducatorSignUp />} />
+              <Route path="/courses" element={<Courses />} />
             </Route>
             <Route path="/student" element={<StudentRoute />}>
               <Route path="dashboard" element={<StudentDashboard />} />

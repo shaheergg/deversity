@@ -60,12 +60,15 @@ export const useAuthStore = create((set) => ({
           //console.log("--------------",res);
 
           if (response.ok) {
-            const eductorData = await response.json();
+            const data = await response.json();
             toast.error("You have successfully registered with Deversity.");
-            set({
-              user: eductorData.educator,
-            });
-            localStorage.setItem("user", JSON.stringify(eductorData.educator));
+            if (role === "student") {
+              localStorage.setItem("user", JSON.stringify(data.student));
+            } else if (role === "educator") {
+              localStorage.setItem("user", JSON.stringify(data.educator));
+            } else {
+              localStorage.setItem("user", JSON.stringify(data.admin));
+            }
           } else {
             console.log(r, response);
             toast.error("hello", r, response);

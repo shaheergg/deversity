@@ -117,7 +117,7 @@ const EducatorCourses = () => {
           ))}
         {courses?.length === 0 && (
           <EmptyState
-            headline="No Courses yet"
+            headline="No Courses yet, but no worries! you can always create one."
             link={"/educator/create-course"}
             actionText={"Create Course"}
           />

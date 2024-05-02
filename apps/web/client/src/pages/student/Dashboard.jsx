@@ -47,7 +47,7 @@ const StudentDashboard = () => {
           >
             Catalog
           </Link>
-          
+
           <Link
             className={`px-4 py-2 text-sm rounded-full ${
               selectedPage === "Projects"

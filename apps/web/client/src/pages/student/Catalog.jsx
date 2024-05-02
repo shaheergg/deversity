@@ -1,199 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../components/Logo";
 import Home from "../student/Home";
 import Learn from "../student/Learn";
 import CourseCard from "../../components/CourseCard";
+import { useCatalogStore } from "../../store/catalog";
 const Catalog = () => {
-  const [selectedPage, setSelectedPage] = useState("Home");
-  const handleClick = (e) => {
-    e.preventDefault();
-    setSelectedPage(e.target.textContent);
-  };
+  const catalog = useCatalogStore((state) => state.catalog);
+  const getCatalog = useCatalogStore((state) => state.getCatalog);
+  useEffect(() => {
+    getCatalog();
+  }, []);
 
-  const courses = [
-    {
-      title: "Introduction to Python Programming",
-      description: "Learn the fundamentals of Python programming language.",
-      creation_date: "2024-04-29",
-      enrollments: 100,
-      educator_name: "John Doe",
-      status: "None",
-    },
-    {
-      title: "Machine Learning Basics",
-      description: "An introductory course to machine learning concepts.",
-      creation_date: "2024-04-30",
-      enrollments: 75,
-      educator_name: "Jane Smith",
-      status: "None",
-    },
-    {
-      title: "Web Development Fundamentals",
-      description:
-        "Explore the basics of web development including HTML, CSS, and JavaScript.",
-      creation_date: "2024-05-01",
-      enrollments: 120,
-      educator_name: "Alice Johnson",
-      status: "None",
-    },
-    {
-      title: "Introduction to Data Science",
-      description: "An overview of data science concepts and techniques.",
-      creation_date: "2024-05-02",
-      enrollments: 90,
-      educator_name: "Michael Brown",
-      status: "None",
-    },
-    {
-      title: "Artificial Intelligence Fundamentals",
-      description:
-        "Learn the basics of artificial intelligence and its applications.",
-      creation_date: "2024-05-03",
-      enrollments: 80,
-      educator_name: "David Lee",
-      status: "None",
-    },
-    {
-      title: "Java Programming for Beginners",
-      description: "An introductory course to Java programming language.",
-      creation_date: "2024-05-04",
-      enrollments: 110,
-      educator_name: "Emily Wilson",
-      status: "None",
-    },
-    {
-      title: "Graphic Design Principles",
-      description: "Explore the fundamental principles of graphic design.",
-      creation_date: "2024-05-05",
-      enrollments: 95,
-      educator_name: "Sam Carter",
-      status: "None",
-    },
-    {
-      title: "Digital Marketing Fundamentals",
-      description: "An introduction to digital marketing strategies and tools.",
-      creation_date: "2024-05-06",
-      enrollments: 85,
-      educator_name: "Sophia Garcia",
-      status: "None",
-    },
-    {
-      title: "Introduction to Cloud Computing",
-      description: "Learn the basics of cloud computing and its benefits.",
-      creation_date: "2024-05-07",
-      enrollments: 105,
-      educator_name: "Daniel Martinez",
-      status: "None",
-    },
-    {
-      title: "Cybersecurity Essentials",
-      description: "An overview of cybersecurity principles and practices.",
-      creation_date: "2024-05-08",
-      enrollments: 70,
-      educator_name: "Emma Thompson",
-      status: "None",
-    },
-    {
-      title: "Spanish Language Basics",
-      description: "Learn the basics of the Spanish language.",
-      creation_date: "2024-05-09",
-      enrollments: 95,
-      educator_name: "Carlos Rodriguez",
-      status: "None",
-    },
-    {
-      title: "Financial Literacy",
-      description: "An introduction to basic financial concepts and skills.",
-      creation_date: "2024-05-10",
-      enrollments: 115,
-      educator_name: "Olivia Clark",
-      status: "None",
-    },
-    {
-      title: "Photography Fundamentals",
-      description:
-        "Explore the fundamentals of photography techniques and composition.",
-      creation_date: "2024-05-11",
-      enrollments: 80,
-      educator_name: "Benjamin White",
-      status: "None",
-    },
-    {
-      title: "Mobile App Development",
-      description:
-        "An introductory course to mobile app development using popular frameworks.",
-      creation_date: "2024-05-12",
-      enrollments: 100,
-      educator_name: "Liam Taylor",
-      status: "None",
-    },
-    {
-      title: "Leadership Skills Development",
-      description:
-        "Develop essential leadership skills for personal and professional growth.",
-      creation_date: "2024-05-13",
-      enrollments: 90,
-      educator_name: "Ava Martin",
-      status:"Recent",
-    },
-    {
-      title: "Public Speaking Mastery",
-      description:
-        "Master the art of public speaking and effective communication.",
-      creation_date: "2024-05-14",
-      enrollments: 85,
-      educator_name: "Noah Anderson",
-      status: "Recent",
-    },
-    {
-      title: "Introduction to UX/UI Design",
-      description:
-        "Learn the basics of user experience (UX) and user interface (UI) design.",
-      creation_date: "2024-05-15",
-      enrollments: 95,
-      educator_name: "Luna Perez",
-      status: "None",
-    },
-    {
-      title: "Environmental Sustainability",
-      description:
-        "Explore concepts and strategies for environmental sustainability.",
-      creation_date: "2024-05-16",
-      enrollments: 75,
-      educator_name: "Mateo Sanchez",
-      status: "None",
-    },
-    {
-      title: "Creative Writing Workshop",
-      description:
-        "Hone your creative writing skills through interactive workshops.",
-      creation_date: "2024-05-17",
-      enrollments: 110,
-      educator_name: "Ella Turner",
-      status: "Enrolled",
-    },
-    {
-      title: "Economics for Everyone",
-      description:
-        "An accessible introduction to economic principles and theories.",
-      creation_date: "2024-05-18",
-      enrollments: 120,
-      educator_name: "Isaac Baker",
-      status: "Enrolled",
-    },
-    {
-      title: "Mindfulness and Meditation",
-      description:
-        "Learn techniques for mindfulness and meditation for overall well-being.",
-      creation_date: "2024-05-19",
-      enrollments: 100,
-      educator_name: "Mia Lewis",
-      status: "Enrolled",
-    },
-  ];
-
-  const [searchTerm, setSearchTerm] = useState('None');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -203,7 +22,7 @@ const Catalog = () => {
     <>
       <div className="flex flex-col w-10/12 p-4 m-auto font-grotesk mt-7">
         <div className="flex flex-wrap">
-          <div className="flex-1 text-2xl font-bold">All Catalogs</div>
+          <div className="flex-1 text-2xl font-bold">Course Catalog</div>
           <div className="items-center">
             <div className="flex items-center justify-end flex-1 gap-2 px-4 py-2 border-2">
               <label htmlFor="search" className="text-gray-400">
@@ -231,17 +50,19 @@ const Catalog = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3 font-grotesk">
-          {
-            
-            searchTerm ? courses
-            .filter((course) => course.title.includes(searchTerm))
-            .map((course, index) => (
-            <CourseCard key={index} course={course} />
-          )):courses
-           
-            .map((course, index) => (
-            <CourseCard key={index} course={course} />
-          ))}
+          {searchTerm
+            ? catalog
+                .filter((course) => course.title.includes(searchTerm))
+                .map((course, index) => (
+                  <CourseCard key={index} course={course} />
+                ))
+            : catalog.map((course, index) => (
+                <CourseCard
+                  key={index}
+                  course={course}
+                  educator={course?.Educator}
+                />
+              ))}
         </div>
       </div>
     </>
