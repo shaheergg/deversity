@@ -115,7 +115,10 @@ const EducatorDashboard = () => {
             <h2 className="text-3xl font-semibold font-grotesk">
               Recent Courses
             </h2>
-            <Link to="/" className="text-sm font-medium text-secondary">
+            <Link
+              to="/educator/courses"
+              className="text-sm font-medium text-secondary"
+            >
               View All
             </Link>
           </div>

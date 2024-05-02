@@ -2,7 +2,7 @@ import Logo from "./Logo";
 import { Link } from "react-router-dom";
 function Navbar() {
   return (
-    <div className="fixed top-0 flex items-center justify-between w-full px-4 py-3 bg-white border-b">
+    <div className="sticky top-0 flex items-center justify-between w-full px-4 py-3 bg-white border-b">
       <div>
         <Logo />
       </div>
