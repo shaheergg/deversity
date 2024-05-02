@@ -5,11 +5,14 @@ import { useState } from "react";
 import { validateEmail } from "../../lib/utils";
 import { useAuthStore } from "../../store/auth";
 import { ROLES } from "../../constants";
+import { useEducatorStore } from "../../store/educator";
 
 function EducatorLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = useAuthStore((state) => state.login);
+  const fetchEducator = useEducatorStore((state) => state.fetchEducator);
+  const token = useAuthStore((state) => state.token);
   const submitForm = (e) => {
     e.preventDefault();
     if (!validateEmail(email)) {
@@ -25,6 +28,7 @@ function EducatorLogin() {
       return;
     }
     login({ email, password }, ROLES.EDUCATOR);
+    fetchEducator(token);
   };
   return (
     <>

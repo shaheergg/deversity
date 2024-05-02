@@ -12,15 +12,14 @@ const EducatorDashboard = () => {
   const courses = useCourseStore((state) => state.courses);
   const fetchEducator = useEducatorStore((state) => state.fetchEducator);
   const educator = useEducatorStore((state) => state.educator);
-  const user = useAuthStore((state) => state.user);
   useEffect(() => {
-    const parsedUser = JSON.parse(user);
-    getCourses(token, parsedUser?.id);
+    getCourses(token, educator?.id);
   }, [getCourses]);
   useEffect(() => {
     fetchEducator(token);
   }, [fetchEducator]);
   console.log(educator);
+  // window.location.reload();
   return (
     <EducatorLayout>
       <section className="space-y-8">
@@ -68,7 +67,7 @@ const EducatorDashboard = () => {
                 localStorage.clear();
                 window.location.reload();
               }}
-              className="flex items-center gap-2 px-4 py-2 ml-2 text-black rounded-md hover:bg-secondary/70 bg-primary"
+              className="flex items-center gap-2 px-4 py-2 ml-2 text-black rounded-md hover:bg-primary-hover bg-primary"
             >
               Logout
             </Link>
@@ -105,7 +104,7 @@ const EducatorDashboard = () => {
             <h3 className="text-xl font-semibold font-grotesk">Enrollments</h3>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-3xl font-semibold font-grotesk">25</p>
+                <p className="text-3xl font-semibold font-grotesk">0</p>
                 <p className="text-sm font-medium text-gray-500">Total</p>
               </div>
             </div>
@@ -160,10 +159,10 @@ const EducatorDashboard = () => {
                       </div>
                       <div>
                         <Link
-                          to="/"
+                          to={`/educator/courses/${course.id}`}
                           className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
                         >
-                          View
+                          Edit Course
                         </Link>
                       </div>
                     </div>

@@ -3,18 +3,34 @@ import EducatorLayout from "../../layouts/EducatorLayout";
 import { useCourseStore } from "../../store/course";
 import { useAuthStore } from "../../store/auth";
 import EmptyState from "../../components/EmptyState";
+import { useEducatorStore } from "../../store/educator";
+import { Link } from "react-router-dom";
 
 const EducatorCourses = () => {
   const courses = useCourseStore((state) => state.courses);
   const getCourses = useCourseStore((state) => state.getCourses);
   const token = useAuthStore((state) => state.token);
-  const user = useAuthStore((state) => state.user);
-  const [parsedUser, setParsedUser] = useState({});
+  const educator = useEducatorStore((state) => state.educator);
+  const publishCourse = useCourseStore((state) => state.publishCourse);
+  const [query, setQuery] = useState("");
   useEffect(() => {
-    const parsedUser = JSON.parse(user);
-    setParsedUser(parsedUser);
-    getCourses(token, parsedUser?.id);
+    getCourses(token, educator?.id);
   }, []);
+  const publish = (id) => {
+    const courseToPublish = courses.find((course) => course.id === id);
+
+    if (!courseToPublish) {
+      // Handle case where course with id is not found (optional)
+      console.error(`Course with id ${id} not found`);
+      return;
+    }
+    if (!courseToPublish.published) {
+      publishCourse(token, id);
+    }
+  };
+  const filteredCourses = courses.filter((course) => {
+    return course.title.toLowerCase().includes(query.toLowerCase());
+  });
   console.log(courses);
   return (
     <EducatorLayout current={1}>
@@ -50,6 +66,8 @@ const EducatorCourses = () => {
           </label>
           <input
             type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for courses"
             className="w-full py-3 pl-12 border outline-none font-grotesk border-secondary focus:ring"
           />
@@ -57,7 +75,7 @@ const EducatorCourses = () => {
       </div>
       <div className="py-12 space-y-2">
         {courses?.length > 0 &&
-          courses.map((course) => (
+          filteredCourses.map((course) => (
             <div key={course.id} className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <img
@@ -67,26 +85,43 @@ const EducatorCourses = () => {
                 />
                 <div>
                   <h3 className="text-2xl font-semibold">{course.title}</h3>
-                  <p className="text-lg">{course.description}</p>
+                  <p className="text-lg max-w-7xl font-grotesk">
+                    {course.description}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <button
-                  disabled={!parsedUser?.verified}
-                  className={`px-4 py-2 rounded-md text-secondary ${
-                    parsedUser?.verified
-                      ? "bg-green-600"
-                      : "bg-gray-300 cursor-not-allowed"
-                  }`}
+                {course.published ? (
+                  ""
+                ) : (
+                  <button
+                    onClick={() => publish(course.id)}
+                    disabled={!educator?.verified && !course?.published}
+                    className={`px-4 py-2 rounded-md text-secondary ${
+                      educator?.verified || !course.published
+                        ? "bg-primary hover:bg-primary-hover text-secondary font-grotesk"
+                        : "bg-gray-300 cursor-not-allowed"
+                    }`}
+                  >
+                    Publish
+                  </button>
+                )}
+                <Link
+                  to={`/educator/courses/${course.id}`}
+                  className="px-4 py-2 rounded-md text-secondary"
                 >
-                  Publish
-                </button>
-                <button className="px-4 py-2 rounded-md text-secondary">
                   Edit
-                </button>
+                </Link>
               </div>
             </div>
           ))}
+        {courses?.length === 0 && (
+          <EmptyState
+            headline="No Courses yet"
+            link={"/educator/create-course"}
+            actionText={"Create Course"}
+          />
+        )}
       </div>
     </EducatorLayout>
   );

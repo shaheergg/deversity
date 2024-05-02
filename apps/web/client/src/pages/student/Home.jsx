@@ -47,8 +47,6 @@ const Home = () => {
     },
   ];
 
-  //console.log(courses);
-
   return (
     <>
       <div id="scorecard" className="flex flex-col w-10/12 p-4 m-auto">

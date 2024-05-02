@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { BASE_URL } from "../constants";
 
 export const useEducatorStore = create((set) => ({
-  educator: {},
+  educator: JSON.parse(localStorage.getItem("user")) || {},
   fetchEducator: async (token) => {
     try {
       const response = await fetch(`${BASE_URL}/api/educator`, {
@@ -16,11 +16,14 @@ export const useEducatorStore = create((set) => ({
       if (response.ok) {
         const data = await response.json();
         set({ educator: data.data });
+        localStorage.setItem("user", JSON.stringify(data.data));
       } else {
         toast.error("Failed to fetch educator data");
       }
     } catch (error) {
       toast.error("Failed to fetch educator data");
+    } finally {
+      // window.location.reload();
     }
   },
   createEducator: async (token, data) => {

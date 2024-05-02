@@ -28,7 +28,25 @@ export const useCourseStore = create((set) => ({
       console.error(error);
     }
   },
-
+  publishCourse: async (token, courseId) => {
+    try {
+      const response = await fetch(
+        BASE_URL + `/api/courses/${courseId}/publish`,
+        {
+          method: "PUT",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        toast.success("Course published successfully");
+      }
+    } catch (error) {
+      toast.error("Internal Server Error");
+    }
+  },
   createCourse: async (course, token, educatorId) => {
     try {
       const response = await fetch(BASE_URL + `/api/courses/${educatorId}`, {
@@ -61,14 +79,13 @@ export const useCourseStore = create((set) => ({
         },
       });
 
-        if (response.ok) {
-          toast.success("Courses Fetched Successfully");
-           console.log(response);
-        } else {
-          toast.error("Failed to create course");
-          console.log(response);
-        }
- 
+      if (response.ok) {
+        toast.success("Courses Fetched Successfully");
+        console.log(response);
+      } else {
+        toast.error("Failed to create course");
+        console.log(response);
+      }
     } catch (error) {
       console.log(error);
     }
