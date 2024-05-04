@@ -20,7 +20,7 @@ export const createUser = async (req, res) => {
       },
     });
     //console.log(user);
-    
+
     const jwt = generateJWT(user);
     res.status(200).json({ token: jwt, role: user.role });
   } catch (error) {
@@ -60,3 +60,24 @@ export const signIn = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// export const getUser = async (req, res) => {
+//   try {
+//     const users = await db.user.findMany({
+//       select: {
+//         email: true,
+//         role: true,
+//         educator: {
+//           include: {
+//             id: true,
+//           },
+//         },
+//         student: true,
+//         admin: true,
+//       },
+//     });
+//     res.json(users);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };

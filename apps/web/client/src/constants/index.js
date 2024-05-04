@@ -5,3 +5,13 @@ export const ROLES = {
   EDUCATOR: "educator",
   ADMIN: "admin",
 };
+
+export const CREDENTIAL_TYPES = [
+  "Certificate",
+  "Diploma",
+  "Degree",
+  "License",
+  "Other",
+];
+
+export const LEVELS = ["Beginner", "Intermediate", "Pro"];

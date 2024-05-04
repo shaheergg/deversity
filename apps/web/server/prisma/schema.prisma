@@ -121,6 +121,7 @@ model Note {
   moduleId    Int
 }
 
+// submission model to store the project submissions
 model Submission {
   id        String    @id @unique @default(cuid())
   link      String
@@ -170,7 +171,7 @@ enum Role {
 
 enum Level {
   BEGINNER
-  INTERMIDIATE
+  INTERMEDIATE
   PRO
 }
 

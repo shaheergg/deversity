@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+import process from "process";
 // write appropriate comment
 
 /**
@@ -12,11 +13,11 @@ import jwt from "jsonwebtoken";
  */
 
 export const protect = (req, res, next) => {
-  const barear = req.headers.authorization;
-  if (!barear) {
+  const bearer = req.headers.authorization;
+  if (!bearer) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-  const [, token] = barear.split(" ");
+  const [, token] = bearer.split(" ");
   // authorization: "Bearer shhhhldkjfjfkffkkfkfk"
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });

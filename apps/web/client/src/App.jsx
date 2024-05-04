@@ -9,16 +9,21 @@ import AdminRoute from "./routes/AdminRoute";
 import EducatorRoute from "./routes/EducatorRoute";
 import Admin from "./pages/admin/Admin";
 import Login from "./pages/Login";
-import SignUp from "./pages/SignUp"
+import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 import RootLayout from "./layouts/RootLayout";
 import StudentDashboard from "./pages/student/Dashboard";
 import EducatorLogin from "./pages/educator/Login";
-import EducatorSignUp from "./pages/educator/SignUp"
+import EducatorSignUp from "./pages/educator/SignUp";
 import { Toaster } from "sonner";
 import EducatorDashboard from "./pages/educator/Dashboard";
 import Course from "./pages/student/Course";
-
+import CredentialsPage from "./pages/educator/Credentials";
+import CreateCourse from "./pages/educator/CreateCourse";
+import EducatorCourses from "./pages/educator/Courses";
+import Catalog from "./pages/student/Catalog";
+import EditCourse from "./pages/educator/EditCourse";
+import Courses from "./pages/Courses";
 function App() {
   return (
     <>
@@ -31,6 +36,7 @@ function App() {
               <Route path="signup" element={<SignUp />} />
               <Route path="educator/login" element={<EducatorLogin />} />
               <Route path="educator/signup" element={<EducatorSignUp />} />
+              <Route path="/courses" element={<Courses />} />
             </Route>
             <Route path="/student" element={<StudentRoute />}>
               <Route path="dashboard" element={<StudentDashboard />} />
@@ -38,6 +44,10 @@ function App() {
             </Route>
             <Route path="/educator" element={<EducatorRoute />}>
               <Route path="dashboard" element={<EducatorDashboard />} />
+              <Route path="credentials" element={<CredentialsPage />} />
+              <Route path="create-course" element={<CreateCourse />} />
+              <Route path="courses" element={<EducatorCourses />} />
+              <Route path="courses/:id" element={<EditCourse />} />
             </Route>
             <Route path="/admin" element={<AdminRoute />}>
               <Route path="dashboard" element={<Admin />} />

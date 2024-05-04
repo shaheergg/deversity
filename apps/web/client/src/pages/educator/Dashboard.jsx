@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import EducatorLayout from "../../layouts/EducatorLayout";
 import { Link } from "react-router-dom";
+import { useCourseStore } from "../../store/course";
+import { useAuthStore } from "../../store/auth";
+import { useEducatorStore } from "../../store/educator";
+import EmptyState from "../../components/EmptyState";
 
 const EducatorDashboard = () => {
+  const getCourses = useCourseStore((state) => state.getCourses);
+  const token = useAuthStore((state) => state.token);
+  const courses = useCourseStore((state) => state.courses);
+  const fetchEducator = useEducatorStore((state) => state.fetchEducator);
+  const educator = useEducatorStore((state) => state.educator);
+  useEffect(() => {
+    getCourses(token, educator?.id);
+  }, [getCourses]);
+  useEffect(() => {
+    fetchEducator(token);
+  }, [fetchEducator]);
+  console.log(educator);
+  // window.location.reload();
   return (
     <EducatorLayout>
       <section className="space-y-8">
         <div className="flex items-center justify-between">
           <h2 className="flex items-center gap-2 text-4xl font-semibold font-grotesk">
-            Hi, Welcome, Muhammad!{" "}
-            <span className="px-2 py-1 font-sans text-xs font-semibold text-white bg-green-600 rounded-md font-grotesk">
-              verified
+            Welcome! {educator?.name?.split(" ")[0]}
+            <span className="px-2 py-1 text-xs font-semibold text-white bg-green-600 rounded-md font-grotesk">
+              {educator?.verified ? "Verified" : "Not Verified"}
             </span>
           </h2>
           <div className="flex flex-row">
             <Link
-              to="/"
+              to="/educator/create-course"
               className="flex items-center gap-2 px-4 py-2 text-white rounded-md hover:bg-secondary/70 bg-secondary"
             >
               <svg
@@ -45,12 +62,12 @@ const EducatorDashboard = () => {
             </Link>
             <Link
               to="/"
-              onClick={(e)=>{
+              onClick={(e) => {
                 e.preventDefault();
                 localStorage.clear();
                 window.location.reload();
               }}
-              className="flex items-center gap-2 px-4 ml-2 py-2 text-black rounded-md hover:bg-secondary/70 bg-primary"
+              className="flex items-center gap-2 px-4 py-2 ml-2 text-black rounded-md hover:bg-primary-hover bg-primary"
             >
               Logout
             </Link>
@@ -61,15 +78,24 @@ const EducatorDashboard = () => {
             <h3 className="text-xl font-semibold font-grotesk">Courses</h3>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-3xl font-semibold font-grotesk">5</p>
+                <p className="text-3xl font-semibold font-grotesk">
+                  {courses?.length}
+                </p>
                 <p className="text-sm font-medium text-gray-500">Total</p>
               </div>
               <div>
-                <p className="text-3xl font-semibold font-grotesk">3</p>
+                <p className="text-3xl font-semibold font-grotesk">
+                  {courses?.filter((course) => course.published).length}
+                </p>
                 <p className="text-sm font-medium text-gray-500">Published</p>
               </div>
               <div>
-                <p className="text-3xl font-semibold font-grotesk">2</p>
+                <p className="text-3xl font-semibold font-grotesk">
+                  {
+                    courses?.filter((course) => course.published === false)
+                      .length
+                  }
+                </p>
                 <p className="text-sm font-medium text-gray-500">Draft</p>
               </div>
             </div>
@@ -78,7 +104,7 @@ const EducatorDashboard = () => {
             <h3 className="text-xl font-semibold font-grotesk">Enrollments</h3>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-3xl font-semibold font-grotesk">25</p>
+                <p className="text-3xl font-semibold font-grotesk">0</p>
                 <p className="text-sm font-medium text-gray-500">Total</p>
               </div>
             </div>
@@ -89,127 +115,63 @@ const EducatorDashboard = () => {
             <h2 className="text-3xl font-semibold font-grotesk">
               Recent Courses
             </h2>
-            <Link to="/" className="text-sm font-medium text-secondary">
+            <Link
+              to="/educator/courses"
+              className="text-sm font-medium text-secondary"
+            >
               View All
             </Link>
           </div>
           <div className="divide-y divide-gray-200">
-            <div className="p-4 rounded-md">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-200 rounded-md"></div>
-                  <div>
-                    <h3 className="flex items-center gap-2 text-xl font-semibold font-grotesk">
-                      Working with firebase and react{" "}
-                      <span className="px-2 py-1 text-xs font-medium text-white bg-gray-600 rounded-md">
-                        Draft
-                      </span>
-                    </h3>
-                    <p className="max-w-lg text-sm font-medium text-gray-500 truncate">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Perferendis repellat et aliquam. Lorem ipsum dolor sit
-                      amet consectetur adipisicing elit. Alias explicabo commodi
-                      veritatis voluptatum odit!
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <Link
-                    to="/"
-                    className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
-                  >
-                    View
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="p-4 rounded-md">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-200 rounded-md"></div>
-                  <div>
-                    <h3 className="flex items-center gap-2 text-xl font-semibold font-grotesk">
-                      Working with firebase and react{" "}
-                      <span className="px-2 py-1 text-xs font-medium text-white bg-gray-600 rounded-md">
-                        Draft
-                      </span>
-                    </h3>
-                    <p className="max-w-lg text-sm font-medium text-gray-500 truncate">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Perferendis repellat et aliquam. Lorem ipsum dolor sit
-                      amet consectetur adipisicing elit. Alias explicabo commodi
-                      veritatis voluptatum odit!
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <Link
-                    to="/"
-                    className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
-                  >
-                    View
-                  </Link>
-                </div>
-              </div>
+            <div className="space-y-4 rounded-md">
+              {courses?.length === 0 && (
+                <EmptyState
+                  headline={
+                    "No courses found, Don't worry you can always create one!"
+                  }
+                  actionText={"Create Course"}
+                  link={"/educator/create-course"}
+                />
+              )}
+              {courses?.length > 0 &&
+                courses?.map((course) => {
+                  return (
+                    <div
+                      key={course.id}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-gray-200 rounded-md">
+                          <img
+                            src={course?.coverPhoto}
+                            className="object-cover w-full h-full rounded-md"
+                            alt="cover-img"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="flex items-center gap-2 text-xl font-semibold font-grotesk">
+                            {course?.title}
+                            <span className="px-2 py-1 text-xs font-medium text-white bg-gray-600 rounded-md">
+                              {course.published ? "Published" : "Draft"}
+                            </span>
+                          </h3>
+                          <p className="max-w-lg text-sm font-medium text-gray-500 truncate">
+                            {course?.description}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <Link
+                          to={`/educator/courses/${course.id}`}
+                          className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
+                        >
+                          Edit Course
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>{" "}
-            <div className="p-4 rounded-md">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-200 rounded-md"></div>
-                  <div>
-                    <h3 className="flex items-center gap-2 text-xl font-semibold font-grotesk">
-                      Working with firebase and react{" "}
-                      <span className="px-2 py-1 text-xs font-medium text-white bg-gray-600 rounded-md">
-                        Draft
-                      </span>
-                    </h3>
-                    <p className="max-w-lg text-sm font-medium text-gray-500 truncate">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Perferendis repellat et aliquam. Lorem ipsum dolor sit
-                      amet consectetur adipisicing elit. Alias explicabo commodi
-                      veritatis voluptatum odit!
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <Link
-                    to="/"
-                    className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
-                  >
-                    View
-                  </Link>
-                </div>
-              </div>
-            </div>{" "}
-            <div className="p-4 rounded-md">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-200 rounded-md"></div>
-                  <div>
-                    <h3 className="flex items-center gap-2 text-xl font-semibold font-grotesk">
-                      Working with firebase and react{" "}
-                      <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-md">
-                        Published
-                      </span>
-                    </h3>
-                    <p className="max-w-lg text-sm font-medium text-gray-500 truncate">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Perferendis repellat et aliquam. Lorem ipsum dolor sit
-                      amet consectetur adipisicing elit. Alias explicabo commodi
-                      veritatis voluptatum odit!
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <Link
-                    to="/"
-                    className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
-                  >
-                    View
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
