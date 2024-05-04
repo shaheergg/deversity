@@ -15,6 +15,7 @@ import RootLayout from "./layouts/RootLayout";
 import StudentDashboard from "./pages/student/Dashboard";
 import EducatorLogin from "./pages/educator/Login";
 import EducatorSignUp from "./pages/educator/SignUp";
+import EnrollCourse from "./pages/student/EnrollCourse";
 import { Toaster } from "sonner";
 import EducatorDashboard from "./pages/educator/Dashboard";
 import Course from "./pages/student/Course";
@@ -41,6 +42,7 @@ function App() {
             <Route path="/student" element={<StudentRoute />}>
               <Route path="dashboard" element={<StudentDashboard />} />
               <Route path="learn/course" element={<Course />} />
+              <Route path="/student/learn/course/:courseId" element={<EnrollCourse/>}/>
             </Route>
             <Route path="/educator" element={<EducatorRoute />}>
               <Route path="dashboard" element={<EducatorDashboard />} />
