@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
+import EnrollCourse from "../pages/student/EnrollCourse";
 
 const CourseCard = ({ course, educator }) => {
   console.log(course);
@@ -26,6 +27,7 @@ const CourseCard = ({ course, educator }) => {
 
   const auth = useAuthStore((state) => state.auth);
   console.log(educator);
+
   return (
     <>
       <div className="flex flex-col justify-between col-span-1 gap-1 p-4 bg-gray-100 rounded shadow border-slate-500">
@@ -58,6 +60,7 @@ const CourseCard = ({ course, educator }) => {
           <Link
             to={auth ? `/student/learn/course/${course?.id}` : "/login"}
             className="block w-full px-4 py-2 font-semibold text-center border-2 rounded font-grotesk text-secondary hover:bg-primary-hover border-primary bg-primary right-1"
+            
           >
             {buttonText}
           </Link>

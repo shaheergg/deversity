@@ -195,7 +195,7 @@ const Course = () => {
                         Read time : 3 hours | Completion time : 10 hours
                     </div>
                     <div className="">
-                        Intructor : John Doe
+                        Educator : John Doe
                     </div>
 
                 </div>
