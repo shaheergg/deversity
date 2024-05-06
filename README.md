@@ -43,7 +43,7 @@ To run this project, you will need to add the following environment variables to
 `DATABASE_URL`
 
 `JWT_SECRET`
-## Authors
+## Contributors
 
 - [@shaheergg](https://github.com/shaheergg)
 - [@786Nabeel](https://github.com/786Nabeel)
