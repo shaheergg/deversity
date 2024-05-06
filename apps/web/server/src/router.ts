@@ -308,11 +308,10 @@ router.put(
 );
 
 // ----------------- Enrollment routes -----------------
-
-router.get("/students/:studentId/enrollments", getStudentEnrollments);
+router.get("/students/enrollments",attachId , errorHandler, getStudentEnrollments);
 router.get("/courses/:courseId/enrollments", getCourseEnrollments);
 router.post(
-  "/students/:studentId/courses/:courseId/enroll",
+  "/students/courses/:courseId/enroll",
   isAlreadyEnrolled,
   enrollCourse
 );

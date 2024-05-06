@@ -4,19 +4,24 @@ import { useEnrollCourseStore } from '../../store/EnrollCourse';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const EnrollCourse = () => {
 
+const EnrollCourse = () => {
 
     const token = useAuthStore((state) => state.token);
     const course = useEnrollCourseStore((state) => state.course);
     const getCourse = useEnrollCourseStore((state) => state.getCourse)
+    const enrollCourse = useEnrollCourseStore((state) => state.enrollCourse)
 
     const { courseId } = useParams();
     console.log(courseId);
 
-    useEffect(() => {
+    useEffect(() => { 
         getCourse(token, courseId);
     }, [getCourse]);
+
+    useEffect(()=>{
+        enrollCourse(token,courseId); 
+    },[])
 
     console.log(course);
 
@@ -105,7 +110,7 @@ const EnrollCourse = () => {
                     </div>
                     <div className='my-6'>
                         {course.description}
-                        
+
                     </div>
                 </div>
                 <div>
@@ -133,7 +138,7 @@ const EnrollCourse = () => {
 
 
                         </div>
-                        <div class="" style={{ "width": "25%" }}>
+                        <div class="flex flex-col gap-6" style={{ "width": "25%" }}>
 
                             <div className="flex flex-col p-3 border-slate-200 border-2 rounded-md gap-3 ">
                                 <div className='text-md font-semibold uppercase inline-flex items-center mb-3 bg-primary text-black py-2 px-2'>
@@ -175,6 +180,31 @@ const EnrollCourse = () => {
 
                                 </div>
 
+                            </div>
+
+                            <div className="flex flex-col border-slate-200 border-2 rounded-md my-3 p-6 justify-center items-center">
+                                <div className='flex flex-col justify-center items-center'>
+                                    <div className="rounded-full bg-lime-500">
+                                        <img
+                                            className="w-16 h-16 bg-gray-800 rounded-full"
+                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            alt=""
+                                        />
+                                    </div>
+                                    <div className='font-bold text-xl py-3 flex gap-2'>
+                                        <div className=''>
+                                            {/* {course.Educator.name} */} Sham
+                                        </div>
+                                        <div className="text-primary pt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='my-3 align-middle'>
+                                    {/* {course.Educator.about} */} Educator's about
+                                </div>
                             </div>
                         </div>
                     </div>

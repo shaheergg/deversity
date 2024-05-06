@@ -1,10 +1,16 @@
 import db from "../db";
 
 export const getStudentEnrollments = async (req, res) => {
-  const { studentId } = req.params;
+  //const { studentId } = req.params;
+  const studentId = req.body.studentId;
+  //console.log(studentId);
   try {
     const enrollments = await db.enrollment.findMany({
       where: { studentId },
+      include : {
+        Course: true,
+        progress:true,
+      }
     });
     res.status(200).send({ data: enrollments });
   } catch (error) {
@@ -15,9 +21,11 @@ export const getStudentEnrollments = async (req, res) => {
 
 export const getCourseEnrollments = async (req, res) => {
   const { courseId } = req.params;
+  
   try {
     const enrollments = await db.enrollment.findMany({
       where: { courseId },
+    
     });
     res.status(200).send({ data: enrollments });
   } catch (error) {
@@ -27,7 +35,11 @@ export const getCourseEnrollments = async (req, res) => {
 };
 
 export const enrollCourse = async (req, res) => {
-  const { studentId, courseId } = req.params;
+  //console.log("This is student id for Enrollement",req.body.studentId);
+  const studentId = req.body.studentId;
+  const { courseId } = req.params;
+  //console.log("This is course id for Enrollement",courseId);
+
   try {
     const enrollment = await db.enrollment.create({
       data: {
