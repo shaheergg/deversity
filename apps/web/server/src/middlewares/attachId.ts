@@ -36,14 +36,14 @@ export const attachId = async (req, res, next) => {
       },
     });
 
-    console.log(userData);
+    //console.log("this is user dataaaa ",userData);
 
     if (!userData) {
       throw new Error(`${role} data not found for this user`);
     }
 
     req.body[idField] = userData.id;
-    console.log(req.body[idField]);
+    //console.log("this is role's id",req.body[idField]);
     next();
   } catch (error) {
     console.log(String(error));

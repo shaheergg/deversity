@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/auth";
 import EnrollCourse from "../pages/student/EnrollCourse";
 
 const CourseCard = ({ course, educator }) => {
-  console.log(course);
+  //console.log("Heyy",course);
   let buttonText;
   switch (course.status) {
     case "Completed":
@@ -26,7 +26,7 @@ const CourseCard = ({ course, educator }) => {
   };
 
   const auth = useAuthStore((state) => state.auth);
-  console.log(educator);
+  //console.log(educator);
 
   return (
     <>
