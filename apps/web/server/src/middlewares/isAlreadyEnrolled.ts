@@ -1,6 +1,6 @@
 import db from "../db";
 
-export const ifAlreadyEnrolled = (req, res, next) => {
+export const isAlreadyEnrolled = (req, res, next) => {
   const { courseId, studentId } = req.body;
 
   try {
