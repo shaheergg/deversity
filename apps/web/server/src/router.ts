@@ -75,6 +75,7 @@ import {
   deleteProject,
 } from "./controllers/project";
 import { attachId } from "./middlewares/attachId";
+import { ifAlreadyEnrolled } from "./middlewares/ifAlreadyEnrolled";
 
 const router = Router();
 
@@ -310,6 +311,10 @@ router.put(
 
 router.get("/students/:studentId/enrollments", getStudentEnrollments);
 router.get("/courses/:courseId/enrollments", getCourseEnrollments);
-router.post("/students/:studentId/courses/:courseId/enroll", enrollCourse);
+router.post(
+  "/students/:studentId/courses/:courseId/enroll",
+  ifAlreadyEnrolled,
+  enrollCourse
+);
 
 export default router;
