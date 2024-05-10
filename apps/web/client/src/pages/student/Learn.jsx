@@ -1,26 +1,22 @@
-import React, { useInsertionEffect } from "react";
 import { useState, useEffect } from "react";
-import CourseCard from "../../components/CourseCard";
-import { useEnrollCourseStore } from "../../store/EnrollCourse";
+import { useEnrollCourseStore } from "../../store/enrollCourse";
 import { useAuthStore } from "../../store/auth";
 import EnrollCourseCard from "../../components/EnrollCourseCard";
 
 const Learn = () => {
   const [category, setCategory] = useState("Enrolled");
   const enrollments = useEnrollCourseStore((state) => state.enrollments);
-  const course = useEnrollCourseStore((state) => state.course);
   const token = useAuthStore((state) => state.token);
   const getEnrollments = useEnrollCourseStore((state) => state.getEnrollments);
-  const getCourse = useEnrollCourseStore((state) => state.getCourse);
-
+  console.log(enrollments);
   useEffect(() => {
-   const get = async () => {
-    await getEnrollments(token);
-   }
-   get()
-  }, [getEnrollments]);
+    getEnrollments(token).catch((error) => {
+      // Handle error here, e.g., show a toast notification
+      console.error("Error fetching enrollments:", error);
+    });
+  }, [getEnrollments, token]);
 
-console.log("Enrollments in Learn page",enrollments);
+  console.log("Enrollments in Learn page", enrollments);
   return (
     <>
       <div id="learn" className="flex flex-col w-10/12 p-4 m-auto font-grotesk">
@@ -44,7 +40,6 @@ console.log("Enrollments in Learn page",enrollments);
               <div className="text-lg">Skill Mastery</div>
             </div>
           </div>
-          
         </div>
 
         <div className="flex gap-4 text-lg font-medium border-b">
@@ -53,10 +48,11 @@ console.log("Enrollments in Learn page",enrollments);
               e.preventDefault();
               setCategory("Enrolled");
             }}
-            className={`${category === "Enrolled"
-              ? "border-b-secondary font-semibold border-b-2 "
-              : ""
-              } cursor-pointer  py-2`}
+            className={`${
+              category === "Enrolled"
+                ? "border-b-secondary font-semibold border-b-2 "
+                : ""
+            } cursor-pointer  py-2`}
           >
             Enrolled
           </button>
@@ -65,20 +61,20 @@ console.log("Enrollments in Learn page",enrollments);
               e.preventDefault();
               setCategory("Completed");
             }}
-            className={`${category === "Completed"
-              ? "border-b-secondary font-semibold border-b-2"
-              : ""
-              } cursor-pointer  py-2`}
+            className={`${
+              category === "Completed"
+                ? "border-b-secondary font-semibold border-b-2"
+                : ""
+            } cursor-pointer  py-2`}
           >
             Completed
           </button>
-          
         </div>
         <div>
           <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3 font-grotesk">
             {enrollments?.data
-              // .filter((course) => course.status === category)
-              .map((enrollment, index) => (
+              .filter((enrollment) => enrollment?.progress?.percentage < 100)
+              ?.map((enrollment, index) => (
                 <EnrollCourseCard key={index} enrollment={enrollment} />
               ))}
           </div>

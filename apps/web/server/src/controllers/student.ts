@@ -51,11 +51,10 @@ export const createStudent = async (req, res) => {
  */
 
 export const getStudent = async (req, res) => {
-  const { id } = req.params;
   const userId = req.user.id;
   try {
     const student = await db.student.findUnique({
-      where: { id, userId },
+      where: { userId },
     });
     res.json({ data: student });
   } catch (error) {

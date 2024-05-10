@@ -116,6 +116,8 @@ router.post(
   createStudent
 );
 
+router.get("/student", getStudent);
+
 // router.get("/students/:id", adminAccess, getStudent);
 
 // ----------------- Credential routes -----------------
@@ -308,10 +310,11 @@ router.put(
 );
 
 // ----------------- Enrollment routes -----------------
-router.get("/students/enrollments",attachId , errorHandler, getStudentEnrollments);
+router.get("/students/enrollments", attachId, getStudentEnrollments);
 router.get("/courses/:courseId/enrollments", getCourseEnrollments);
 router.post(
   "/students/courses/:courseId/enroll",
+  attachId,
   isAlreadyEnrolled,
   enrollCourse
 );

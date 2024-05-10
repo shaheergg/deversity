@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useEnrollCourseStore } from "../../store/enrollCourse";
+import { useAuthStore } from "../../store/auth";
+import EnrollCourseCard from "../../components/EnrollCourseCard";
 const Home = () => {
   const courses = [
     {
@@ -51,6 +53,13 @@ const Home = () => {
     const u = localStorage.getItem("user");
     setUser(JSON.parse(u));
   }, []);
+  const token = useAuthStore((state) => state.token);
+  const getEnrollments = useEnrollCourseStore((state) => state.getEnrollments);
+  const enrollments = useEnrollCourseStore((state) => state.enrollments);
+  useEffect(() => {
+    getEnrollments(token);
+  }, [getEnrollments, token]);
+  console.log(enrollments);
   return (
     <>
       <div id="scorecard" className="flex flex-col w-10/12 p-4 m-auto">
@@ -127,44 +136,13 @@ const Home = () => {
         <div className="p-6 text-2xl font-bold font-grotesk">
           In Progress Courses
         </div>
-
-        {courses
-          .filter((course) => course.status === "In Progress")
-          .map((course, index) => (
-            <div key={index} className="p-4 rounded-md">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-200 rounded-md"></div>
-                  <div className="flex-1 space-y-2">
-                    <h3 className="flex items-center gap-2 text-xl font-semibold font-grotesk">
-                      {course.title}{" "}
-                      <span className="px-2 py-1 text-xs font-medium text-white bg-gray-600 rounded-md">
-                        {course.status}
-                      </span>
-                    </h3>
-                    <p className="max-w-lg text-sm font-medium text-gray-500 truncate">
-                      {course.description}
-                    </p>
-                    {/* <div className="w-full bg-gray-100 rounded-full h-2.5 dark:bg-gray-200">
-                      <div
-                        className="bg-primary h-2.5 rounded-full"
-                        style={{ width: "45%" }}
-                      ></div>
-                    </div> */}
-                  </div>
-                </div>
-
-                <div>
-                  <Link
-                    to="/CoursePage"
-                    className="px-4 py-2 text-sm text-white rounded-md bg-secondary"
-                  >
-                    Continue
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="space-y-2">
+          {enrollments?.data?.map((enrollment) => {
+            return (
+              <EnrollCourseCard key={enrollment.id} enrollment={enrollment} />
+            );
+          })}
+        </div>
       </div>
 
       {/* <div className="flex flex-col font-grotesk">

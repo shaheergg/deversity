@@ -31,56 +31,59 @@ export const useEnrollCourseStore = create((set) => ({
   },
   enrollCourse: async (token, courseId) => {
     try {
-      console.log("Enrolling Course");
-      try {
-        const response = await fetch(BASE_URL + `/api/students/courses/${courseId}/enroll`, {
+      const response = await fetch(
+        BASE_URL + `/api/students/courses/${courseId}/enroll`,
+        {
           method: "POST",
           headers: {
             authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        });
-
-        if (response.ok) {
-          // Parse the data (assuming JSON response)
-          const course = await response.json();
-          console.log("Course is enrolled successfully:");
-          toast.success("Course is enrolled successfully");
-        } else {
-          toast.error("There is an error enrolling course ");
-          console.log(response);
         }
-      } catch (error) {
-        toast.error("Internal Server Error");
-        console.error(error);
+      );
+
+      if (response.ok) {
+        // Parse the data (assuming JSON response)
+        const data = await response.json();
+        console.log(data);
+        console.log("Course is enrolled successfully:");
+        toast.success("Course is enrolled successfully");
+      } else {
+        toast.error("You have already enrolled in this course.");
+        console.log(response);
+        console.log(response.errors);
       }
     } catch (error) {
       toast.error("Internal Server Error");
+      console.error(error);
     }
   },
   getEnrollments: async (token) => {
-      try {
-        const response = await fetch(BASE_URL + `/api/students/enrollments`, {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+    try {
+      const response = await fetch(BASE_URL + `/api/students/enrollments`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (response.ok) {
-          // Parse the data (assuming JSON response)
-          const enrollment = await response.json();
-          set((state) => ({ enrollments: enrollment}));
-          console.log("Course Enrollments by Student fetched successfully:",enrollment);
-          //toast.success("Course Enrollments by Student fetched successfully:");
-        } else {
-          toast.error("There is an error fetching enrollments");
-          console.log(response);
-        }
-      } catch (error) {
-        toast.error("Internal Server Error");
-        console.error(error); 
+      if (response.ok) {
+        // Parse the data (assuming JSON response)
+        const enrollment = await response.json();
+        set((state) => ({ enrollments: enrollment }));
+        console.log(
+          "Course Enrollments by Student fetched successfully:",
+          enrollment
+        );
+        toast.success("Course Enrollments by Student fetched successfully:");
+      } else {
+        toast.error("The course is already enrolled.");
+        console.log(response);
       }
-  }
+    } catch (error) {
+      toast.error("Internal Server Error");
+      console.error(error);
+    }
+  },
 }));

@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Logo from "../../components/Logo";
-import Home from "../student/Home";
-import Learn from "../student/Learn";
+import { useEffect, useState } from "react";
 import CourseCard from "../../components/CourseCard";
 import { useCatalogStore } from "../../store/catalog";
 const Catalog = () => {

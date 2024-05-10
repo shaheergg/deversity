@@ -39,6 +39,7 @@ export const attachId = async (req, res, next) => {
     //console.log("this is user dataaaa ",userData);
 
     if (!userData) {
+      console.log(`${role} data not found for this user`);
       throw new Error(`${role} data not found for this user`);
     }
 
