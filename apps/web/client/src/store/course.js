@@ -70,24 +70,4 @@ export const useCourseStore = create((set) => ({
       toast.error("Internal Server Error");
     }
   },
-
-  getAllCourse: async () => {
-    try {
-      const response = await fetch(BASE_URL + "/catalog", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        toast.success("Courses Fetched Successfully");
-        console.log(response);
-      } else {
-        toast.error("Failed to create course");
-        console.log(response);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  },
 }));

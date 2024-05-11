@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 import React from "react";
 import { useState, useEffect } from "react";
+=======
+import { useState, useEffect } from "react";
+import { useEnrollCourseStore } from "../../store/enrollCourse";
+>>>>>>> 2230b4eb34697c32ccfeea8ae4a2a9f1fdf681c4
 import { useAuthStore } from "../../store/auth";
 import EnrollCourseCard from "../../components/EnrollCourseCard";
 import { useEnrollmentStore } from "../../store/enrollment";
 
 const Learn = async() => {
   const [category, setCategory] = useState("Enrolled");
+<<<<<<< HEAD
   const enrollments = useEnrollmentStore((state) => state.enrollments);
   const token = useAuthStore((state) => state.token);
   const getEnrollments = useEnrollmentStore((state) => state.getEnrollments);
@@ -44,6 +50,20 @@ const Learn = async() => {
   // }
   // get();
 
+=======
+  const enrollments = useEnrollCourseStore((state) => state.enrollments);
+  const token = useAuthStore((state) => state.token);
+  const getEnrollments = useEnrollCourseStore((state) => state.getEnrollments);
+  console.log(enrollments);
+  useEffect(() => {
+    getEnrollments(token).catch((error) => {
+      // Handle error here, e.g., show a toast notification
+      console.error("Error fetching enrollments:", error);
+    });
+  }, [getEnrollments, token]);
+
+  console.log("Enrollments in Learn page", enrollments);
+>>>>>>> 2230b4eb34697c32ccfeea8ae4a2a9f1fdf681c4
   return (
     <>
       <div id="learn" className="flex flex-col w-10/12 p-4 m-auto font-grotesk">
@@ -67,7 +87,10 @@ const Learn = async() => {
               <div className="text-lg">Skill Mastery</div>
             </div>
           </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2230b4eb34697c32ccfeea8ae4a2a9f1fdf681c4
         </div>
 
         <div className="flex gap-4 text-lg font-medium border-b">
@@ -76,10 +99,11 @@ const Learn = async() => {
               e.preventDefault();
               setCategory("Enrolled");
             }}
-            className={`${category === "Enrolled"
-              ? "border-b-secondary font-semibold border-b-2 "
-              : ""
-              } cursor-pointer  py-2`}
+            className={`${
+              category === "Enrolled"
+                ? "border-b-secondary font-semibold border-b-2 "
+                : ""
+            } cursor-pointer  py-2`}
           >
             Enrolled
           </button>
@@ -88,19 +112,27 @@ const Learn = async() => {
               e.preventDefault();
               setCategory("Completed");
             }}
-            className={`${category === "Completed"
-              ? "border-b-secondary font-semibold border-b-2"
-              : ""
-              } cursor-pointer  py-2`}
+            className={`${
+              category === "Completed"
+                ? "border-b-secondary font-semibold border-b-2"
+                : ""
+            } cursor-pointer  py-2`}
           >
             Completed
           </button>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2230b4eb34697c32ccfeea8ae4a2a9f1fdf681c4
         </div>
         <div>
           <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3 font-grotesk">
             {enrollments?.data
+<<<<<<< HEAD
               // .filter((course) => course.status === category)
+=======
+              .filter((enrollment) => enrollment?.progress?.percentage < 100)
+>>>>>>> 2230b4eb34697c32ccfeea8ae4a2a9f1fdf681c4
               ?.map((enrollment, index) => (
                 <EnrollCourseCard key={index} enrollment={enrollment} />
               ))}
