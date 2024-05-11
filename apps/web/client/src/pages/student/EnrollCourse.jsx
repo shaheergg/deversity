@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useAuthStore } from "../../store/auth";
-import { useEnrollCourseStore } from '../../store/EnrollCourse';
+import { useEnrollmentStore } from "../../store/enrollment";
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 const EnrollCourse = () => {
 
     const token = useAuthStore((state) => state.token);
-    const course = useEnrollCourseStore((state) => state.course);
-    const getCourse = useEnrollCourseStore((state) => state.getCourse)
-    const enrollCourse = useEnrollCourseStore((state) => state.enrollCourse)
+    const course = useEnrollmentStore((state) => state.course);
+    const getCourse = useEnrollmentStore((state) => state.getCourse)
+    const enrollCourse = useEnrollmentStore((state) => state.enrollCourse)
 
     const { courseId } = useParams();
     console.log(courseId);

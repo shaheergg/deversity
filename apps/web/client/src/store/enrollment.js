@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { BASE_URL } from "../constants";
 import { toast } from "sonner";
-export const useEnrollCourseStore = create((set) => ({
+export const useEnrollmentStore = create((set) => ({
   course: {},
   enrollments: {},
   getCourse: async (token, courseId) => {
@@ -30,6 +30,7 @@ export const useEnrollCourseStore = create((set) => ({
     }
   },
   enrollCourse: async (token, courseId) => {
+
     try {
       console.log("Enrolling Course");
       try {
@@ -59,6 +60,7 @@ export const useEnrollCourseStore = create((set) => ({
     }
   },
   getEnrollments: async (token) => {
+    console.log("Get enrollments called");
       try {
         const response = await fetch(BASE_URL + `/api/students/enrollments`, {
           method: "GET",
