@@ -15,7 +15,6 @@ export const useCredentialStore = create((set) => ({
           },
         }
       );
-
       const credentials = await response.json();
       if (response.ok) {
         set({ credentials: credentials.data });

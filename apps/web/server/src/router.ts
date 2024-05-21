@@ -49,6 +49,7 @@ import {
   createModule,
   deleteModule,
   getModule,
+  getModules,
   getNextModule,
   getPreviousModule,
   updateModule,
@@ -76,9 +77,9 @@ import {
 } from "./controllers/project";
 import { attachId } from "./middlewares/attachId";
 import { isAlreadyEnrolled } from "./middlewares/isAlreadyEnrolled";
-
+import { upload } from "./controllers/upload";
+import multer from "multer";
 const router = Router();
-
 // ----------------- Admin routes -----------------
 router.get("/admin", adminAccess, getAdmin);
 router.post(
@@ -297,13 +298,14 @@ router.post(
   errorHandler,
   createModule
 );
+router.get("/modules/:sectionId", getModules);
 router.get("/modules/:moduleId/next", getNextModule);
 router.get("/modules/:moduleId/previous", getPreviousModule);
-router.get("/modules/:moduleId", getModule);
+router.get("/modules/:moduleId/content", getModule);
 router.delete("/modules/:moduleId", deleteModule);
 router.put(
   "/modules/:moduleId",
-  body("title").isString(),
+  body("title").isString().optional(),
   body("content").isString().optional(),
   errorHandler,
   updateModule
@@ -318,5 +320,7 @@ router.post(
   isAlreadyEnrolled,
   enrollCourse
 );
+
+router.post("/upload", upload);
 
 export default router;

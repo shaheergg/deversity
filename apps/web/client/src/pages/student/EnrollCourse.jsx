@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../../store/auth";
 import { useEnrollCourseStore } from "../../store/enrollCourse";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { Disclosure, Transition } from "@headlessui/react";
+import Logo from "../../components/Logo";
 
 const EnrollCourse = () => {
   const token = useAuthStore((state) => state.token);
@@ -12,138 +13,138 @@ const EnrollCourse = () => {
   const { courseId } = useParams();
   useEffect(() => {
     getCourse(token, courseId);
+    console.log("courseId", courseId);
   }, [getCourse, token, courseId]);
-  console.log("one course", course);
-  const chapters = [
-    {
-      chapterTitle: "Python Basics",
-      subtopics: [
-        {
-          title: "Variable Functions Libraries",
-          duration: "1 hour",
-        },
-        {
-          title: "Conditional Statements",
-          duration: "1.5 hours",
-        },
-        {
-          title: "Loops and Iterations",
-          duration: "1 hour",
-        },
-      ],
-    },
-    {
-      chapterTitle: "Data Analysis Techniques",
-      subtopics: [
-        {
-          title: "Descriptive Statistics",
-          duration: "2 hours",
-        },
-        {
-          title: "Data Visualization",
-          duration: "2.5 hours",
-        },
-        {
-          title: "Data Wrangling",
-          duration: "2 hours",
-        },
-      ],
-    },
-  ];
+
   const enroll = () => {
     enrollCourse(token, courseId);
   };
-
+  console.log(course);
   return (
     <>
+      <div className="flex items-center justify-between p-4 border-2 border-b shadow">
+        <div>
+          <Logo />
+        </div>
+      </div>
       <div className="flex flex-col w-10/12 gap-8 p-4 m-auto font-grotesk mt-7">
-        <div className="flex flex-col rounded-md bg-secondary font-grotesk p-9">
-          <div className="my-1 text-sm text-gray-400 uppercase">
-            Interactive Course
-          </div>
+        <div className="flex flex-col rounded-xl bg-secondary font-grotesk p-9">
           <div className="text-3xl font-bold text-white mb-7">
-            {course.title}
+            <Link to="/student/catalog" className="text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={40}
+                height={40}
+                color={"currentColor"}
+                fill={"none"}
+                className="inline-block mb-2 mr-4"
+              >
+                <path
+                  d="M4 12L20 12"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+            {course?.title}
           </div>
-          <div className="flex gap-2 mb-7">
+          <div className="pb-2">
+            <h2 className="text-white">
+              For{" "}
+              <span className="lowercase text-primary">{course?.level}s</span>
+            </h2>
+          </div>
+          <div className="text-white mb-7 ">{course?.description}</div>
+          <div className="flex items-center gap-4 ">
             <button
               onClick={enroll}
-              className="px-4 py-1 font-medium rounded-md bg-primary"
+              className="px-4 py-2 font-semibold text-white border-2 border-white hover:text-secondary hover:bg-white bg-secondary"
             >
-              Start Course
+              Go to catalog
             </button>
             <button
-              to=""
-              className="px-4 py-1 text-white border-2 rounded-md bg-secondary border-slate-200"
+              onClick={enroll}
+              className="px-4 py-2 font-semibold border-2 border-primary hover:bg-primary-hover hover:border-primary-hover bg-primary"
             >
-              Bookmark
+              Enroll in the course
             </button>
           </div>
-          <div className="flex gap-2 text-white">
-            <div className="py-2">
-              <span className="px-6 py-2 text-sm font-semibold border-2 rounded-md text-primary border-slate-200">
-                {course?.level}
-              </span>
-            </div>
-            <div className="inline-flex px-3 pt-2 rounded-md bg-slate-700">
-              {/* {course.sections.length * 12} */}
-              <span className="mr-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-              </span>
-              0 hours
-            </div>
-          </div>
-        </div>
-
-        <div className="">
-          <div className="text-2xl font-bold">Course Description</div>
-          <div className="my-6">{course.description}</div>
         </div>
         <div>
           <div className="flex gap-3 font-grotesk">
-            <div
-              className="p-4 border-2 rounded-md border-slate-200"
-              style={{ width: "75%" }}
-            >
-              {chapters.map((chapter, index) => (
-                <div key={index} className="my-3">
-                  <div className="my-1 text-xl font-bold">
-                    {chapter.chapterTitle}
-                  </div>
-                  {chapter.subtopics.map((subtopic, subIndex) => (
-                    <Link
-                      to="/"
-                      key={subIndex}
-                      className="flex p-1 text-lg cursor-pointer hover:bg-slate-200"
-                    >
-                      <div className="w-4/5">{subtopic.title}</div>
-                      <div className="w-1/5 text-right">
-                        {/* {subtopic.duration} */}
-                        XPs
-                      </div>
-                    </Link>
-                  ))}
+            <div className="" style={{ width: "75%" }}>
+              <div className="pb-4 border-2 rounded-b-xl rounded-t-xl">
+                <div className="p-4 border-b">
+                  <div className="text-2xl font-bold">Course Overview</div>
                 </div>
-              ))}
+                {!course ? (
+                  <div>Course is empty</div>
+                ) : (
+                  course?.sections.map((section, index) => (
+                    <Disclosure className="font-sans " as={"div"} key={index}>
+                      <Disclosure.Button as="div">
+                        <div
+                          class="flex cursor-pointer border-y p-4 items-center justify-between"
+                          id="stepTwoHeader"
+                        >
+                          <h2 class="text-lg font-semibold">
+                            {section?.title}
+                          </h2>
+                          <span class="text-sm text-gray-600">
+                            {section?.modules.length} modules
+                          </span>
+                        </div>
+                      </Disclosure.Button>
+                      {section?.modules.map((module, subIndex) => (
+                        <Transition
+                          key={subIndex}
+                          enter={`transition duration-${
+                            12 * subIndex + 1
+                          } ease-out`}
+                          enterFrom="transform scale-95 opacity-0"
+                          enterTo="transform scale-100 opacity-100"
+                          leave="transition duration-75 ease-out"
+                          leaveFrom="transform scale-100 opacity-100"
+                          leaveTo="transform scale-95 opacity-0"
+                        >
+                          <Disclosure.Panel className="flex px-4 py-1 border cursor-pointer hover:bg-gray-100">
+                            <div class="py-2">
+                              <Link
+                                to={`/student/courses/${course?.id}/modules/${module?.id}`}
+                                class="flex w-full items-center justify-between text-left"
+                              >
+                                <span>{module?.title}</span>
+                              </Link>
+                            </div>
+                          </Disclosure.Panel>
+                        </Transition>
+                      ))}
+                    </Disclosure>
+                  ))
+                )}
+              </div>
+              <div className="py-4 space-y-4">
+                <div className="my-2 text-2xl font-bold">
+                  Who is this course for?
+                </div>
+                <div>{course?.summary}</div>
+              </div>
             </div>
             <div class="flex flex-col gap-6" style={{ width: "25%" }}>
-              <div className="flex flex-col gap-3 p-2 border-2 rounded-md border-slate-200 ">
+              <div className="flex flex-col gap-3 p-2 border-2 rounded-xl">
                 <div className="inline-flex items-center px-4 py-2 mb-3 font-semibold ">
                   Course Resources
                 </div>
-
                 <div className="inline-flex items-center px-4 py-2 border rounded-md cursor-pointer hover:bg-secondary hover:text-white">
                   <span className="mr-2">
                     <svg
@@ -203,31 +204,30 @@ const EnrollCourse = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center justify-center p-6 my-3 border-2 rounded-md border-slate-200">
-                <div className="flex flex-col items-center justify-center">
-                  <div className="rounded-full bg-lime-500">
-                    <img
-                      className="w-16 h-16 bg-gray-800 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                  </div>
-                  <div className="flex gap-2 py-3 text-xl font-bold">
-                    <div className="text-lg font-semibold">
-                      {/* {course.Educator.name} */} {course?.Educator?.name}
+              <div className="flex flex-col p-6 my-3 border-2 rounded-xl">
+                <div className="flex">
+                  <div className="text-xl font-bold">
+                    <div className="flex items-center gap-2 text-lg font-semibold">
+                      <img
+                        className="w-8 h-8 rounded-full"
+                        src={`https://api.dicebear.com/8.x/initials/svg?seed=${course?.Educator?.name}`}
+                        alt=""
+                      />
+                      <span>{course?.Educator?.name}</span>
                     </div>
                   </div>
                 </div>
                 <div className="my-3 align-middle">
                   {course?.Educator?.about}
                 </div>
+                <div>
+                  <button className="w-full px-4 py-2 text-white transition-all border bg-secondary border-secondary hover:bg-white hover:text-secondary">
+                    See Profile
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div className="my-2 text-2xl font-bold">Summary of the Course</div>
-          <div className="my-6">{course?.summary}</div>
         </div>
       </div>
     </>

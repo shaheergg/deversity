@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import EditCourseLayout from "../../layouts/EditCourseLayout";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "../../store/auth";
 import { useCourseContentStore } from "../../store/courseContent";
 import Editor from "../../components/Editor";
 import { useModuleStore } from "../../store/module";
-
-const EditCourse = () => {
-  const { id } = useParams();
+export default function CourseContent() {
   const { moduleId } = useParams();
+  const { courseId } = useParams();
   const token = useAuthStore((state) => state.token);
   const getCourseDetails = useCourseContentStore(
     (state) => state.getCourseDetails
@@ -19,10 +19,10 @@ const EditCourse = () => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    getCourseDetails(token, id).then(() => {
+    getCourseDetails(token, courseId).then(() => {
       setLoading(false);
     });
-  }, [token, getCourseDetails, id]);
+  }, [token, getCourseDetails, courseId]);
   useEffect(() => {
     getModule(token, moduleId);
   }, [getModule, moduleId, token]);
@@ -32,18 +32,13 @@ const EditCourse = () => {
       loading={loading}
       title={course?.title}
       sections={course?.sections}
-      courseId={id}
+      courseId={courseId}
       currentModule={moduleId}
+      editable={false}
     >
-      {Number(moduleId) === 0 ? (
-        <div className="flex items-center justify-center py-4 font-sans text-lg font-semibold text-center">
-          Start Adding content by navigating to modules
-        </div>
-      ) : (
-        <Editor module={module} />
-      )}
+      <div key={moduleId}>
+        <Editor editable={false} />
+      </div>
     </EditCourseLayout>
   );
-};
-
-export default EditCourse;
+}
