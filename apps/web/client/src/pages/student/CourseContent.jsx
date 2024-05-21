@@ -36,9 +36,13 @@ export default function CourseContent() {
       currentModule={moduleId}
       editable={false}
     >
-      <div key={moduleId}>
-        <Editor editable={false} />
-      </div>
+      {moduleId === "0" ? (
+        "Navigate to a module to view its content"
+      ) : (
+        <div key={moduleId}>
+          <Editor editable={false} />
+        </div>
+      )}
     </EditCourseLayout>
   );
 }

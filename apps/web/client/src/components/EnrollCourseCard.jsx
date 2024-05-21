@@ -28,18 +28,9 @@ const EnrollCourseCard = ({ enrollment }) => {
         </div>
         <div className="truncate">{enrollment.Course.description}</div>
         <div>
-          <div className="flex flex-row items-center gap-3 my-3">
-            <div className="w-full h-2 bg-gray-200 rounded-md">
-              <div
-                className="h-full bg-primary"
-                style={{
-                  width: `${enrollment.progress.percentage}%`,
-                }}
-              ></div>
-            </div>
-            <span className="font-semibold">
-              {enrollment?.progress.percentage}%
-            </span>
+          <div className="flex flex-row items-center gap-3 my-3 font-grotesk">
+            Enrollment Status:{" "}
+            <span className="font-semibold lowercase">{enrollment.status}</span>
           </div>
         </div>
         <div className="flex justify-end w-full py-2">
@@ -49,7 +40,7 @@ const EnrollCourseCard = ({ enrollment }) => {
                 ? `/student/courses/${enrollment.Course?.id}/modules/${0}`
                 : "/login"
             }
-            className="px-4 py-2 font-semibold text-center border-2 rounded font-grotesk text-secondary hover:bg-primary-hover border-primary bg-primary right-1"
+            className="w-full px-4 py-2 font-semibold text-center border-2 rounded font-grotesk text-secondary hover:bg-primary-hover border-primary bg-primary right-1"
           >
             Keep Making Progress
           </Link>

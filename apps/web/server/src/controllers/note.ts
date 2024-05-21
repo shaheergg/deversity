@@ -5,7 +5,7 @@ export const getAllNotes = async (req, res) => {
   try {
     const { moduleId } = req.params;
     const notes = await db.note.findMany({
-      where: { moduleId },
+      where: { moduleId: Number(moduleId), userId: req.user.id },
     });
 
     res.status(200).send({ data: notes });
@@ -20,12 +20,14 @@ export const addNote = async (req, res) => {
   try {
     const { moduleId } = req.params;
     const { title, description } = req.body;
+    const userId = req.user.id;
 
     const newNote = await db.note.create({
       data: {
         title,
         description,
-        moduleId,
+        userId,
+        moduleId: Number(moduleId),
       },
     });
 
