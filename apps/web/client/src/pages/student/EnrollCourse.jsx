@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../../store/auth";
-import { useEnrollCourseStore } from "../../store/enrollCourse";
+import { useEnrollmentStore } from "../../store/enrollment";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const EnrollCourse = () => {
   const token = useAuthStore((state) => state.token);
-  const getCourse = useEnrollCourseStore((state) => state.getCourse);
-  const course = useEnrollCourseStore((state) => state.course);
-  const enrollCourse = useEnrollCourseStore((state) => state.enrollCourse);
+  const getCourse = useEnrollmentStore((state) => state.getCourse);
+  const course = useEnrollmentStore((state) => state.course);
+  const enrollCourse = useEnrollmentStore((state) => state.enrollCourse);
   const { courseId } = useParams();
   useEffect(() => {
     getCourse(token, courseId);

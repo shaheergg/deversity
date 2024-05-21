@@ -60,17 +60,6 @@ export const useEnrollmentStore = create((set) => ({
     }
   },
   getEnrollments: async (token) => {
-<<<<<<< HEAD:apps/web/client/src/store/enrollment.js
-    console.log("Get enrollments called");
-      try {
-        const response = await fetch(BASE_URL + `/api/students/enrollments`, {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-=======
     try {
       const response = await fetch(BASE_URL + `/api/students/enrollments`, {
         method: "GET",
@@ -79,7 +68,6 @@ export const useEnrollmentStore = create((set) => ({
           "Content-Type": "application/json",
         },
       });
->>>>>>> 2230b4eb34697c32ccfeea8ae4a2a9f1fdf681c4:apps/web/client/src/store/enrollCourse.js
 
       if (response.ok) {
         // Parse the data (assuming JSON response)
