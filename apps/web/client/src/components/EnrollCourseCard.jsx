@@ -44,7 +44,11 @@ const EnrollCourseCard = ({ enrollment }) => {
         </div>
         <div className="flex justify-end w-full py-2">
           <Link
-            //to={auth ? `/student/learn/course/${course?.id}` : "/login"}
+            to={
+              auth
+                ? `/student/courses/${enrollment.Course?.id}/modules/${0}`
+                : "/login"
+            }
             className="px-4 py-2 font-semibold text-center border-2 rounded font-grotesk text-secondary hover:bg-primary-hover border-primary bg-primary right-1"
           >
             Keep Making Progress

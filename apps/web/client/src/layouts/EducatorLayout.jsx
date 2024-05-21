@@ -326,7 +326,7 @@ export default function EducatorLayout({ children, current = 0 }) {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+        <div className=" lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col px-6 overflow-y-auto bg-secondary grow gap-y-5">
             <div className="flex items-center h-16 shrink-0">

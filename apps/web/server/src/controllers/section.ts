@@ -3,12 +3,14 @@ import db from "../db";
 export const getSections = async (req, res) => {
   try {
     const { courseId } = req.params;
-    const sections = db.section.findMany({
+    const sections = await db.section.findMany({
       where: { courseId },
       include: {
         modules: true,
       },
     });
+    console.log(sections);
+    res.status(200).json({ data: sections });
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching sections");
@@ -17,7 +19,7 @@ export const getSections = async (req, res) => {
 
 export const createSection = async (req, res) => {
   const { courseId } = req.params;
-  const { title, description } = req.body;
+  const { title } = req.body;
   try {
     const section = await db.section.create({
       data: {

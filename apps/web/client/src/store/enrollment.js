@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { BASE_URL } from "../constants";
 import { toast } from "sonner";
-export const useEnrollmentStore = create((set) => ({
-  course: {},
+export const useEnrollCourseStore = create((set) => ({
+  course: null,
   enrollments: {},
   getCourse: async (token, courseId) => {
+    console.log("courseId", courseId);
     try {
       const response = await fetch(BASE_URL + `/api/course/${courseId}`, {
         method: "GET",
@@ -18,7 +19,8 @@ export const useEnrollmentStore = create((set) => ({
         // Parse the data (assuming JSON response)
         const course = await response.json();
         // Update state with the parsed courses
-        set((state) => ({ course: course.data })); // Replace with your state update logic
+        console.log("in store", course);
+        set({ course: course.data }); // Replace with your state update logic
         console.log("Course fetched successfully:", course.data);
       } else {
         toast.error("There was an error fetching course data");
