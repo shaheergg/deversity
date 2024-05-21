@@ -20,8 +20,8 @@ export const getCourseDetails = async (req, res) => {
     const course = await db.course.findUnique({
       where: { id },
       include: {
+        resources: true,
         Educator: true,
-        projects: true,
         sections: {
           include: {
             modules: true,

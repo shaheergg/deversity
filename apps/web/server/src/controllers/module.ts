@@ -18,6 +18,21 @@ export const createModule = async (req, res) => {
   }
 };
 
+export const getModules = async (req, res) => {
+  const { sectionId } = req.params;
+  try {
+    const modules = await db.module.findMany({
+      where: {
+        sectionId,
+      },
+    });
+    res.status(200).send({ data: modules });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching modules");
+  }
+};
+
 const getStudentProgress = async (enrollmentId) => {
   const progress = await db.progress.findFirst({
     where: {
@@ -110,11 +125,12 @@ export const getPreviousModule = async (req, res) => {
 };
 
 export const getModule = async (req, res) => {
-  const { id } = req.params;
+  const { moduleId } = req.params;
   try {
     const module = await db.module.findUnique({
-      where: { id },
+      where: { id: Number(moduleId) },
     });
+    console.log(module);
     res.status(200).send({ data: module });
   } catch (error) {
     console.error(error);
@@ -136,11 +152,11 @@ export const deleteModule = async (req, res) => {
 };
 
 export const updateModule = async (req, res) => {
-  const { id } = req.params;
+  const { moduleId } = req.params;
   const { title, content } = req.body;
   try {
     const module = await db.module.update({
-      where: { id },
+      where: { id: Number(moduleId) },
       data: {
         title,
         content,
