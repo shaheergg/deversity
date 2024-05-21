@@ -22,6 +22,7 @@ model User {
   student   Student? // One-to-one relation with Student model
   admin     Admin? // One-to-one relation with Admin model
   educator  Educator? // One-to-one relation with Educator model
+  notes     Note[]
 }
 
 model Student {
@@ -119,6 +120,8 @@ model Note {
   description String
   Module      Module  @relation(fields: [moduleId], references: [id])
   moduleId    Int
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String
 }
 
 // submission model to store the project submissions
@@ -130,6 +133,7 @@ model Submission {
   studentId String?
   Project   Project?  @relation(fields: [projectId], references: [id])
   projectId String?
+  status    Status    @default(PENDING)
 }
 
 model Credential {
@@ -144,13 +148,14 @@ model Credential {
 }
 
 model Enrollment {
-  id        String    @id @unique @default(uuid())
-  createdAt DateTime  @default(now())
+  id        String           @id @unique @default(uuid())
+  createdAt DateTime         @default(now())
   progress  Progress?
-  Student   Student?  @relation(fields: [studentId], references: [id])
+  Student   Student?         @relation(fields: [studentId], references: [id])
   studentId String?
-  Course    Course    @relation(fields: [courseId], references: [id])
+  Course    Course           @relation(fields: [courseId], references: [id])
   courseId  String
+  status    EnrollmentStatus @default(ACTIVE)
 }
 
 model Project {
@@ -187,6 +192,17 @@ enum CredentialType {
   Degree
   License
   Other
+}
+
+enum Status {
+  PENDING
+  PASSED
+  FAILED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
 }
 
 // we can add as much as models we need like ratings , reviews, Questions, Answers, Quizzes, etc

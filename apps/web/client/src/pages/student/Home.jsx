@@ -1,53 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useEnrollCourseStore } from "../../store/enrollCourse";
 import { useAuthStore } from "../../store/auth";
 import EnrollCourseCard from "../../components/EnrollCourseCard";
 const Home = () => {
-  const courses = [
-    {
-      title: "Web Development Fundamentals",
-      status: "In Progress",
-      description:
-        "Learn the basics of web development including HTML, CSS, and JavaScript.",
-    },
-    {
-      title: "Introduction to Data Science",
-      status: "Completed",
-      description:
-        "Gain an understanding of data analysis techniques and tools used in data science.",
-    },
-    {
-      title: "Mobile App Development",
-      status: "In Progress",
-      description:
-        "Explore mobile app development for iOS and Android platforms using React Native.",
-    },
-    {
-      title: "Machine Learning Essentials",
-      status: "In Progress",
-      description:
-        "Learn fundamental concepts of machine learning and how to apply them in real-world scenarios.",
-    },
-    {
-      title: "Graphic Design Basics",
-      status: "Completed",
-      description:
-        "Get started with graphic design tools and principles for creating visually appealing designs.",
-    },
-    {
-      title: "Database Management Fundamentals",
-      status: "In Progress",
-      description:
-        "Understand the basics of database management systems and SQL.",
-    },
-    {
-      title: "Python Programming",
-      status: "Completed",
-      description:
-        "Learn the fundamentals of Python programming language, including data structures, functions, and control flow.",
-    },
-  ];
   const [user, setUser] = useState({});
   useEffect(() => {
     const u = localStorage.getItem("user");
@@ -75,21 +30,11 @@ const Home = () => {
             <div className="text-2xl font-bold">
               Hey, {user?.name?.split(" ")[0]}
             </div>
+            <div>
+              <span className="font-bold">From </span> {user?.school}
+            </div>
           </div>
         </div>
-        <hr />
-        <div className="flex flex-row gap-6 p-6 font-grotesk">
-          <div className="flex-1 border-r-2 border-gray-300">
-            <div className="text-xl font-bold">Daily Xp</div>
-            <div>430</div>
-          </div>
-
-          <div className="flex-1">
-            <div className="text-xl font-bold">Total Xp</div>
-            <div>11223</div>
-          </div>
-        </div>
-        <hr></hr>
         <div className="flex flex-row gap-2 p-6 font-grotesk">
           <div className="flex-1">
             <div className="flex justify-end gap-4 text-base font-bold">
@@ -127,10 +72,6 @@ const Home = () => {
             <div className="text-xl font-bold">Projects Done</div>
             <div>3</div>
           </div>
-          <div className="flex-1 pl-6 border-l-2 border-gray-300">
-            <div className="text-xl font-bold">Lessons Taken</div>
-            <div>77</div>
-          </div>
         </div>
 
         <div className="p-6 text-2xl font-bold font-grotesk">
@@ -143,6 +84,11 @@ const Home = () => {
             );
           })}
         </div>
+        {enrollments?.data?.length === 0 && (
+          <div className="flex items-center justify-center p-6 font-grotesk">
+            No Courses in Progress
+          </div>
+        )}
       </div>
 
       {/* <div className="flex flex-col font-grotesk">

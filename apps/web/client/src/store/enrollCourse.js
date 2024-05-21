@@ -78,7 +78,6 @@ export const useEnrollCourseStore = create((set) => ({
           "Course Enrollments by Student fetched successfully:",
           enrollment
         );
-        toast.success("Course Enrollments by Student fetched successfully:");
       } else {
         toast.error("The course is already enrolled.");
         console.log(response);
