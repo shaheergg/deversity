@@ -197,9 +197,6 @@ const EditCourseLayout = ({
                 Add Resources
               </button>
             </AddResourceDrawer>
-            <button className="px-4 py-1 text-sm font-semibold border-4 rounded-md hover:bg-gray-100 font-grotesk border-secondary">
-              Publish
-            </button>
             <button
               disabled={!content}
               onClick={updateContent}

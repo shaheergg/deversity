@@ -109,3 +109,21 @@ export const deleteCourse = async (req, res) => {
     res.status(500).send("An error occurred while deleting course");
   }
 };
+
+export const getPublishedCourses = async (req, res) => {
+  console.log("in published course route");
+  const educatorId= req.body.educatorId;
+  console.log("this is Educator id ",educatorId);
+  try {
+    const publishedCourses = await db.course.findMany({
+      where: { published: true, educatorId: educatorId },
+    });
+    console.log("Backend Assessments",publishedCourses);
+
+    res.status(200).send({ message:"Published courses fetched successfully", data: publishedCourses });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while getting published courses");
+  }
+};
+

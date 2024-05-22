@@ -2,13 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "../../store/auth";
 import EnrollCourseCard from "../../components/EnrollCourseCard";
-import { useEnrollmentStore } from "../../store/enrollment";
+import { useEnrollCourseStore } from "../../store/enrollment";
 
-const Learn = async() => {
+const Learn = () => {
   const [category, setCategory] = useState("Enrolled");
-  const enrollments = useEnrollmentStore((state) => state.enrollments);
+  const enrollments = useEnrollCourseStore((state) => state.enrollments);
   const token = useAuthStore((state) => state.token);
-  const getEnrollments = useEnrollmentStore((state) => state.getEnrollments);
+  const getEnrollments = useEnrollCourseStore((state) => state.getEnrollments);
   console.log(enrollments);
   useEffect(() => {
     getEnrollments(token).catch((error) => {

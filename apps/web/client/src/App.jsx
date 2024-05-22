@@ -27,6 +27,9 @@ import EditCourse from "./pages/educator/EditCourse";
 import Courses from "./pages/Courses";
 import ModuleContent from "./pages/educator/ModuleContent";
 import CourseContent from "./pages/student/CourseContent";
+import Assessments from "./pages/educator/Assessments";
+import EducatorAssessments from "./pages/educator/EducatorAssessments";
+import Submission from "./pages/educator/Submissions";
 function App() {
   return (
     <>
@@ -58,6 +61,9 @@ function App() {
               <Route path="credentials" element={<CredentialsPage />} />
               <Route path="create-course" element={<CreateCourse />} />
               <Route path="courses" element={<EducatorCourses />} />
+              <Route path="assessments/add" element={<Assessments/>}/>
+              <Route path="assessments" element={<EducatorAssessments/>}/>
+              <Route path="submissions" element={<Submission/>} />
               <Route
                 path="courses/:id/modules/:moduleId"
                 element={<EditCourse />}

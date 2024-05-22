@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../../store/auth";
-import { useEnrollCourseStore } from "../../store/enrollCourse";
+import { useEnrollCourseStore } from "../../store/enrollment";
 import { Link, useParams } from "react-router-dom";
 import { Disclosure, Transition } from "@headlessui/react";
 import Logo from "../../components/Logo";
 
 const EnrollCourse = () => {
   const token = useAuthStore((state) => state.token);
-  const getCourse = useEnrollmentStore((state) => state.getCourse);
-  const course = useEnrollmentStore((state) => state.course);
-  const enrollCourse = useEnrollmentStore((state) => state.enrollCourse);
+  const getCourse = useEnrollCourseStore((state) => state.getCourse);
+  const course = useEnrollCourseStore((state) => state.course);
+  const enrollCourse = useEnrollCourseStore((state) => state.enrollCourse);
   const { courseId } = useParams();
   useEffect(() => {
     getCourse(token, courseId);
@@ -30,7 +30,7 @@ const EnrollCourse = () => {
       <div className="flex flex-col w-10/12 gap-8 p-4 m-auto font-grotesk mt-7">
         <div className="flex flex-col rounded-xl bg-secondary font-grotesk p-9">
           <div className="text-3xl font-bold text-white mb-7">
-            <Link to="/student/catalog" className="text-white">
+            <Link to="/student/dashboard" className="text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -66,12 +66,12 @@ const EnrollCourse = () => {
           </div>
           <div className="text-white mb-7 ">{course?.description}</div>
           <div className="flex items-center gap-4 ">
-            <button
-              onClick={enroll}
+            <Link
+              to='/student/dashboard'
               className="px-4 py-2 font-semibold text-white border-2 border-white hover:text-secondary hover:bg-white bg-secondary"
             >
-              Go to catalog
-            </button>
+              Go to Dashboard
+            </Link>
             <button
               onClick={enroll}
               className="px-4 py-2 font-semibold border-2 border-primary hover:bg-primary-hover hover:border-primary-hover bg-primary"
@@ -88,7 +88,7 @@ const EnrollCourse = () => {
                   <div className="text-2xl font-bold">Course Overview</div>
                 </div>
                 {!course ? (
-                  <div>Course is empty</div>
+                  <div className="p-4">Course is empty</div>
                 ) : (
                   course?.sections.map((section, index) => (
                     <Disclosure className="font-sans " as={"div"} key={index}>

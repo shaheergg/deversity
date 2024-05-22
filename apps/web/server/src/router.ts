@@ -37,6 +37,7 @@ import {
   editCourse,
   getCourseDetails,
   getCourses,
+  getPublishedCourses,
   publishCourse,
 } from "./controllers/course";
 import {
@@ -74,6 +75,7 @@ import {
   createProject,
   updateProject,
   deleteProject,
+  getProjects,
 } from "./controllers/project";
 import { attachId } from "./middlewares/attachId";
 import { isAlreadyEnrolled } from "./middlewares/isAlreadyEnrolled";
@@ -226,6 +228,7 @@ router.put(
   updateProject
 );
 router.delete("/project/:projectId", errorHandler, deleteProject);
+router.get("/projects", attachId, getProjects);
 
 // --------------------- Submission Routes --------------------
 
@@ -249,6 +252,8 @@ router.delete("/submission/:submissionId", errorHandler, deleteSubmission);
 // ----------------- Course routes -----------------
 
 router.get("/courses/:educatorId", getCourses);
+router.get("/getCourses",attachId, getCourses);
+router.get("/courses/getPublishedCourses" , attachId ,getPublishedCourses);
 router.get("/course/:id", getCourseDetails);
 router.post(
   "/courses/:educatorId",

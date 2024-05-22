@@ -1,6 +1,27 @@
 import db from "../db";
 
 // Get all projects for a specific course
+export const getProjects = async (req, res)=>{
+  const educatorId = req.body.educatorId;
+  try {
+    const projects = await db.project.findMany({
+      where: {
+        Course: {
+          educatorId
+        }
+      },
+      include: {
+        Course: true
+      }
+    }
+    )
+    res.status(200).json({data: projects})
+  }
+  catch(error) {
+    console.error("Error getting projects for course:", error);
+    res.status(500).send("An error occurred while fetching projects for the course.");
+  }
+}
 export const getAllProjectsForCourse = async (req, res) => {
   try {
     const { courseId } = req.params;

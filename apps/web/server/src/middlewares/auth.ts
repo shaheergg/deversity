@@ -14,6 +14,7 @@ import process from "process";
 
 export const protect = (req, res, next) => {
   const bearer = req.headers.authorization;
+
   if (!bearer) {
     return res.status(401).json({ message: "Unauthorized" });
   }

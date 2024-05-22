@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useEnrollmentStore } from "../../store/enrollment";
+import { useEnrollCourseStore } from "../../store/enrollment";
 import { useAuthStore } from "../../store/auth";
 import EnrollCourseCard from "../../components/EnrollCourseCard";
 const Home = () => {
@@ -54,8 +54,8 @@ const Home = () => {
     setUser(JSON.parse(u));
   }, []);
   const token = useAuthStore((state) => state.token);
-  const getEnrollments = useEnrollmentStore((state) => state.getEnrollments);
-  const enrollments = useEnrollmentStore((state) => state.enrollments);
+  const getEnrollments = useEnrollCourseStore((state) => state.getEnrollments);
+  const enrollments = useEnrollCourseStore((state) => state.enrollments);
   useEffect(() => {
     getEnrollments(token);
   }, [getEnrollments, token]);
