@@ -5,7 +5,7 @@ import EnrollCourseCard from "../../components/EnrollCourseCard";
 import { useEnrollCourseStore } from "../../store/enrollment";
 
 const Learn = () => {
-  const [category, setCategory] = useState("Enrolled");
+  const [category, setCategory] = useState("ACTIVE");
   const enrollments = useEnrollCourseStore((state) => state.enrollments);
   const token = useAuthStore((state) => state.token);
   const getEnrollments = useEnrollCourseStore((state) => state.getEnrollments);
@@ -47,23 +47,23 @@ const Learn = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              setCategory("Enrolled");
+              setCategory("ACTIVE");
             }}
             className={`${
-              category === "Enrolled"
+              category === "ACTIVE"
                 ? "border-b-secondary font-semibold border-b-2 "
                 : ""
             } cursor-pointer  py-2`}
           >
-            Enrolled
+            In Progress
           </button>
           <button
             onClick={(e) => {
               e.preventDefault();
-              setCategory("Completed");
+              setCategory("COMPLETED");
             }}
             className={`${
-              category === "Completed"
+              category === "COMPLETED"
                 ? "border-b-secondary font-semibold border-b-2"
                 : ""
             } cursor-pointer  py-2`}
@@ -74,7 +74,7 @@ const Learn = () => {
         <div>
           <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3 font-grotesk">
             {enrollments?.data
-              .filter((enrollment) => enrollment?.progress?.percentage < 100)
+              .filter((enrollment) => enrollment?.status === category)
               ?.map((enrollment, index) => (
                 <EnrollCourseCard key={index} enrollment={enrollment} />
               ))}

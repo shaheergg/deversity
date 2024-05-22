@@ -8,6 +8,7 @@ import AddResourceDrawer from "../components/AddResourceDrawer";
 import { useModuleStore } from "../store/module";
 import { useEditorStore } from "../store/editor";
 import { toast } from "sonner";
+import NotesDrawer from "../components/NotesDrawer";
 
 const EditCourseLayout = ({
   children,
@@ -28,7 +29,10 @@ const EditCourseLayout = ({
   const module = useModuleStore((state) => state.module);
   const content = useEditorStore((state) => state.content);
   const updateModule = useModuleStore((state) => state.updateModule);
-
+  const modules = useModuleStore((state) => state.modules);
+  console.log("In Editor Course", modules);
+  const [next, setNext] = useState("0");
+  const [prev, setPrev] = useState("0");
   const updateContent = () => {
     if (module?.title === "" || content === null) {
       toast.info("Please enter some content to save");
@@ -42,6 +46,13 @@ const EditCourseLayout = ({
     );
   };
 
+  console.log("In Editor Course", modules);
+
+  useEffect(() => {
+    const idx = modules.findIndex((mod) => String(mod.id) === currentModule);
+    setNext(String(modules[idx + 1]?.id));
+    setPrev(String(modules[idx - 1]?.id));
+  }, [currentModule]);
   useEffect(() => {
     fetchSections(courseId, token);
   }, [courseId, token, fetchSections]);
@@ -62,7 +73,7 @@ const EditCourseLayout = ({
     );
     setPanels(newPanels);
   };
-  useEffect(() => {}, [currentModule]);
+  console.log(next, prev);
   return (
     <section>
       <div className="sticky top-0 flex items-center justify-between px-4 py-4 bg-white border-b">
@@ -104,7 +115,10 @@ const EditCourseLayout = ({
         </div>
         {!editable && (
           <div className="flex items-center">
-            <button className="p-2 border-4 rounded-l hover:bg-gray-100 border-secondary">
+            <Link
+              to={`/student/courses/${courseId}/modules/${prev}`}
+              className="p-2 border-4 rounded-l hover:bg-gray-100 border-secondary"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -128,11 +142,14 @@ const EditCourseLayout = ({
                   strokeLinejoin="round"
                 />
               </svg>
-            </button>
+            </Link>
             <span className="px-4 py-[6px] font-semibold border-y-4 hover:bg-gray-100 border-secondary">
-              {module?.title}
+              {currentModule === "0" ? "Overview" : module?.title}
             </span>
-            <button className="p-2 border-4 rounded-r hover:bg-gray-100 border-secondary">
+            <Link
+              to={`/student/courses/${courseId}/modules/${next}`}
+              className="p-2 border-4 rounded-r hover:bg-gray-100 border-secondary"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -156,7 +173,7 @@ const EditCourseLayout = ({
                   strokeLinejoin="round"
                 />
               </svg>
-            </button>
+            </Link>
           </div>
         )}
         {editable && (
@@ -210,47 +227,48 @@ const EditCourseLayout = ({
         )}
         {!editable && (
           <div>
-            <button className="p-2 bg-gray-100 rounded-md">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={20}
-                height={20}
-                color={"currentColor"}
-                fill={"none"}
-              >
-                <path
-                  d="M16 2V4M11 2V4M6 2V4"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M19.5 10C19.5 6.70017 19.5 5.05025 18.4749 4.02513C17.4497 3 15.7998 3 12.5 3H9.5C6.20017 3 4.55025 3 3.52513 4.02513C2.5 5.05025 2.5 6.70017 2.5 10V15C2.5 18.2998 2.5 19.9497 3.52513 20.9749C4.55025 22 6.20017 22 9.5 22H12.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M17.5 14L17.5 22M21.5 18L13.5 18"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M7 15H11M7 10H15"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
+            <NotesDrawer>
+              <button className="p-2 bg-gray-100 rounded-md">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width={20}
+                  height={20}
+                  color={"currentColor"}
+                  fill={"none"}
+                >
+                  <path
+                    d="M16 2V4M11 2V4M6 2V4"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M19.5 10C19.5 6.70017 19.5 5.05025 18.4749 4.02513C17.4497 3 15.7998 3 12.5 3H9.5C6.20017 3 4.55025 3 3.52513 4.02513C2.5 5.05025 2.5 6.70017 2.5 10V15C2.5 18.2998 2.5 19.9497 3.52513 20.9749C4.55025 22 6.20017 22 9.5 22H12.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M17.5 14L17.5 22M21.5 18L13.5 18"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M7 15H11M7 10H15"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            </NotesDrawer>
           </div>
         )}
       </div>
-
       <section>
         <aside
           className={`fixed overflow-y-auto transition-all h-[90vh] border-r w-[300px] ${
