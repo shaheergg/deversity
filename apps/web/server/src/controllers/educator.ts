@@ -74,3 +74,24 @@ export const getEducator = async (req, res) => {
     res.status(500).send("An error occurred while fetching educator");
   }
 };
+
+export const updateEducatorStatus = async (req, res) => {
+  const { status, id } = req.body;
+  try {
+    const educator = await db.educator.update({
+      where: {
+        id,
+      },
+      data: {
+        verified: status === "verified",
+      },
+    });
+
+    res.status(200).send({
+      message: `Educator with ID ${educator.id} status updated successfully`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while updating educator");
+  }
+};

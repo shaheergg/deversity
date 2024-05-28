@@ -81,3 +81,31 @@ export const signIn = async (req, res) => {
 //     res.status(500).json({ message: error.message });
 //   }
 // };
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await db.user.findMany();
+    res.status(200).json({ data: users });
+  } catch (error) {
+    res.status(500).json({ message: "There was an error fetching all users" });
+  }
+};
+
+export const updateUserStatus = async (req, res) => {
+  try {
+    const { id, status } = req.body();
+    const user = db.user.update({
+      where: {
+        id,
+      },
+      data: {
+        status,
+      },
+    });
+    res.status(200).json({ message: "User status updated successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "There was an error updating user status" });
+  }
+};

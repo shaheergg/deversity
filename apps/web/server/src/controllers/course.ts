@@ -18,7 +18,7 @@ export const getCourseDetails = async (req, res) => {
   try {
     const { id } = req.params;
     const course = await db.course.findUnique({
-      where: { id },
+      where: { id, status: "VISIBLE" },
       include: {
         resources: true,
         Educator: true,
@@ -64,7 +64,7 @@ export const publishCourse = async (req, res) => {
   const { id } = req.params;
   try {
     const course = await db.course.update({
-      where: { id },
+      where: { id, status: "VISIBLE" },
       data: {
         published: true,
       },
@@ -107,5 +107,15 @@ export const deleteCourse = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while deleting course");
+  }
+};
+
+export const getAllCourses = async (req, res) => {
+  try {
+    const courses = await db.course.findMany();
+    res.status(200).send({ data: courses });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while fetching courses");
   }
 };

@@ -3,7 +3,7 @@ export const getCatalog = async (req, res) => {
   try {
     const educatorId = req.educatorId;
     const courses = await db.course.findMany({
-      where: { published: true },
+      where: { published: true, status: "VISIBLE" },
       include: {
         Educator: true,
       },
