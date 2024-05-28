@@ -6,6 +6,7 @@ import {
   createEducator,
   getEducator,
   getEducators,
+  updateEducatorStatus,
 } from "./controllers/educator";
 import {
   getResourcesForCourse,
@@ -35,6 +36,7 @@ import {
   createCourse,
   deleteCourse,
   editCourse,
+  getAllCourses,
   getCourseDetails,
   getCourses,
   publishCourse,
@@ -79,6 +81,8 @@ import { attachId } from "./middlewares/attachId";
 import { isAlreadyEnrolled } from "./middlewares/isAlreadyEnrolled";
 import { upload } from "./controllers/upload";
 import multer from "multer";
+import { isEligible } from "./middlewares/isEligible";
+import { getAllUsers, updateUserStatus } from "./controllers/user";
 const router = Router();
 // ----------------- Admin routes -----------------
 router.get("/admin", adminAccess, getAdmin);
@@ -92,6 +96,9 @@ router.post(
   createAdmin
 );
 
+router.get("/users/all", adminAccess, getAllUsers);
+router.put("/users/update-status", adminAccess, updateUserStatus);
+
 // ----------------- Educator routes -----------------
 
 router.get("/educators", adminAccess, getEducators);
@@ -104,6 +111,14 @@ router.post(
 );
 
 router.get("/educator", attachId, getEducator);
+router.put(
+  "/educator/verification",
+  // body("status").isString().isIn(["verified", "unverified"]),
+  // body("id").isString(),
+  // errorHandler,
+  adminAccess,
+  updateEducatorStatus
+);
 
 // ----------------- Student routes -----------------
 
@@ -260,7 +275,7 @@ router.post(
   errorHandler,
   createCourse
 );
-router.put("/courses/:id/publish", publishCourse);
+router.put("/courses/:id/publish", isEligible, publishCourse);
 router.put(
   "/courses/:id",
   body("title").isString(),
@@ -271,6 +286,7 @@ router.put(
   editCourse
 );
 router.delete("/courses/:id", deleteCourse);
+router.get("/courses/", adminAccess, getAllCourses);
 
 // ----------------- Section routes -----------------
 
@@ -317,6 +333,7 @@ router.get("/courses/:courseId/enrollments", getCourseEnrollments);
 router.post(
   "/students/courses/:courseId/enroll",
   attachId,
+  isEligible,
   isAlreadyEnrolled,
   enrollCourse
 );

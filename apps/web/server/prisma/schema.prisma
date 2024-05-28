@@ -14,15 +14,16 @@ datasource db {
 }
 
 model User {
-  id        String    @id @unique @default(uuid())
-  createdAt DateTime  @default(now())
-  email     String    @unique
+  id        String     @id @unique @default(uuid())
+  createdAt DateTime   @default(now())
+  email     String     @unique
   password  String
   role      Role // Each user has a role
   student   Student? // One-to-one relation with Student model
   admin     Admin? // One-to-one relation with Admin model
   educator  Educator? // One-to-one relation with Educator model
   notes     Note[]
+  status    UserStatus @default(ACTIVE)
 }
 
 model Student {
@@ -74,6 +75,7 @@ model Course {
   enrollments Enrollment[]
   Educator    Educator?    @relation(fields: [educatorId], references: [id])
   educatorId  String?
+  status      CourseStatus @default(VISIBLE)
 }
 
 model Resource {
@@ -205,4 +207,12 @@ enum EnrollmentStatus {
   COMPLETED
 }
 
-// we can add as much as models we need like ratings , reviews, Questions, Answers, Quizzes, etc
+enum UserStatus {
+  ACTIVE
+  BANNED
+}
+
+enum CourseStatus {
+  VISIBLE
+  HIDDEN
+}

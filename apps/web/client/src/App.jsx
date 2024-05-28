@@ -27,6 +27,12 @@ import EditCourse from "./pages/educator/EditCourse";
 import Courses from "./pages/Courses";
 import ModuleContent from "./pages/educator/ModuleContent";
 import CourseContent from "./pages/student/CourseContent";
+import AdminLogin from "./pages/admin/Login";
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminCourse from "./pages/admin/Courses";
+import AdminStudents from "./pages/admin/Students";
+import AdminEducators from "./pages/admin/Educators";
+import AdminLogs from "./pages/admin/Logs";
 function App() {
   return (
     <>
@@ -40,6 +46,7 @@ function App() {
               <Route path="educator/login" element={<EducatorLogin />} />
               <Route path="educator/signup" element={<EducatorSignUp />} />
               <Route path="/courses" element={<Courses />} />
+              <Route path="admin/login" element={<AdminLogin />} />
             </Route>
             <Route path="/student" element={<StudentRoute />}>
               <Route path="dashboard" element={<StudentDashboard />} />
@@ -64,7 +71,11 @@ function App() {
               />
             </Route>
             <Route path="/admin" element={<AdminRoute />}>
-              <Route path="dashboard" element={<Admin />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="courses" element={<AdminCourse />} />
+              <Route path="users" element={<AdminStudents />} />
+              <Route path="verifications" element={<AdminEducators />} />
+              <Route path="logs" element={<AdminLogs />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

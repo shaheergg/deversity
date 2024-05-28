@@ -5,6 +5,7 @@ import { useAuthStore } from "../store/auth";
 import { useResourceStore } from "../store/moduleResource";
 import { toast } from "sonner";
 import { useUploadStore } from "../store/upload";
+import PDFViewer from "./PDFViewer";
 function AddResourceDrawer({ children }) {
   const { moduleId } = useParams();
   const fetchResources = useResourceStore((state) => state.fetchResources);
@@ -61,10 +62,10 @@ function AddResourceDrawer({ children }) {
       <Drawer.Trigger asChild>{children}</Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-        <Drawer.Content className="bg-zinc-100 z-50 flex flex-col rounded-t-[10px] h-[80%] mt-24 fixed bottom-0 left-0 right-0">
+        <Drawer.Content className="bg-zinc-100 overflow-auto z-50 flex flex-col rounded-t-[10px] h-[100%] mt-24 fixed bottom-0 left-0 right-0">
           <div className="p-4 bg-white rounded-t-[10px] flex-1">
             <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
-            <div className="max-w-4xl mx-auto">
+            <div className="mx-auto max-w-7xl">
               <Drawer.Title className="flex items-center justify-between w-full mb-4 text-2xl font-medium">
                 Add a new resource
                 {!uploadView && (
@@ -96,48 +97,7 @@ function AddResourceDrawer({ children }) {
                 ) : (
                   <div className="w-full space-y-2">
                     {resources?.map((resource) => (
-                      <div
-                        key={resource?.id}
-                        className="flex items-center justify-between p-4 bg-gray-100 rounded-md"
-                      >
-                        <div className="space-y-2">
-                          <h3 className="font-sans font-semibold text-gray-800">
-                            {resource?.title}
-                          </h3>
-                          <span className="text-sm font-semibold text-gray-600">
-                            {resource?.type}
-                          </span>
-                        </div>
-                        <a
-                          className="p-2 rounded-md hover:bg-gray-200"
-                          href={resource?.url}
-                          download={true}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width={20}
-                            height={20}
-                            color={"currentColor"}
-                            fill={"none"}
-                          >
-                            <path
-                              d="M12 14.5L12 4.5M12 14.5C11.2998 14.5 9.99153 12.5057 9.5 12M12 14.5C12.7002 14.5 14.0085 12.5057 14.5 12"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M20 16.5C20 18.982 19.482 19.5 17 19.5H7C4.518 19.5 4 18.982 4 16.5"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </a>
-                      </div>
+                      <PDFViewer resource={resource} />
                     ))}
                   </div>
                 )}
